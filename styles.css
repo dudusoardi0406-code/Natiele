@@ -35,8 +35,53 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ============================================================
+   FUNDO — a galeria.
+
+   A imagem é CAMADA, nunca base: o --bg sólido fica embaixo. Se
+   assets/galeria.jpg faltar ou demorar a carregar, a página continua
+   legível e ninguém percebe. Nada aqui carrega texto ou função.
+
+   position: fixed no pseudo-elemento em vez de background-attachment,
+   porque o Safari no iOS ignora "fixed" em background.
+   ============================================================ */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -5vh -5vw;          /* folga pra deriva nunca mostrar borda */
+  z-index: 0;
+  background-image: url("assets/galeria.jpg");
+  background-size: cover;
+  background-position: center 30%;
+  opacity: .32;
+  animation: deriva 52s ease-in-out infinite alternate;
+}
+
+/* Véu quente + vinheta. É isto que garante o contraste do texto:
+   sem o véu, o mármore claro do corredor come as letras. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(125% 75% at 50% 6%,
+      rgba(20,17,15,.30) 0%, rgba(20,17,15,.66) 55%, rgba(20,17,15,.92) 100%),
+    linear-gradient(to bottom,
+      rgba(20,17,15,.66) 0%, rgba(20,17,15,.86) 42%, var(--bg) 90%);
+}
+
+/* A galeria respira devagar; o texto não se mexe junto. */
+@keyframes deriva {
+  from { transform: scale(1.04) translate3d(0, 0, 0); }
+  to   { transform: scale(1.12) translate3d(0, -1.5%, 0); }
+}
+
 /* Mobile-first: 390px é o alvo, não o caso de borda. */
 .page {
+  position: relative;
+  z-index: 1;                /* o conteúdo vive acima das duas camadas */
   max-width: 448px;
   margin: 0 auto;
   padding: 44px 20px 56px;
@@ -116,9 +161,16 @@ button:focus-visible {
   position: relative;
   padding: 26px 20px 20px;
   margin-bottom: var(--gap);
-  background: var(--surface);
+  /* Translúcido: a galeria aparece por trás, mas o texto não depende
+     dela pra ter contraste. O blur é enfeite — se o navegador ignorar,
+     a cor sólida por baixo já sustenta a leitura. */
+  background: rgba(29, 25, 23, .84);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   border: 1px solid var(--linha);
   border-radius: var(--raio);
+  /* Passe-partout: a linha interna de quem emoldura quadro. */
+  box-shadow: inset 0 0 0 1px rgba(217, 160, 102, .07);
   overflow: hidden;
   transition: transform .18s ease, border-color .18s ease;
 }
@@ -139,8 +191,11 @@ button:focus-visible {
 .card--principal {
   border-color: var(--accent);
   background:
-    linear-gradient(160deg, rgba(217,160,102,.10), transparent 55%),
-    var(--surface);
+    linear-gradient(160deg, rgba(217,160,102,.12), transparent 55%),
+    rgba(29, 25, 23, .88);
+  box-shadow:
+    inset 0 0 0 1px rgba(217, 160, 102, .18),
+    0 16px 40px -24px rgba(217, 160, 102, .5);
 }
 
 .card__indice {
@@ -218,6 +273,9 @@ button:focus-visible {
   margin-top: 28px;
   padding: 24px 20px;
   text-align: center;
+  background: rgba(29, 25, 23, .70);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   border: 1px solid var(--linha);
   border-radius: var(--raio);
 }
@@ -266,5 +324,8 @@ button:focus-visible {
 .copyright { margin-top: 20px; opacity: .55; font-size: .75rem; }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition: none !important; }
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;   /* a galeria para de derivar */
+  }
 }
