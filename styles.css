@@ -1,0 +1,289 @@
+/* ============================================================
+   SISTEMA VISUAL — as 6 decisões da seção 1 do blueprint.
+   Os valores abaixo são PROVISÓRIOS (a referência do blueprint).
+   Trocar o nicho = trocar estas linhas, e a página inteira acompanha.
+   ============================================================ */
+:root {
+  --bg:          #1E1916;  /* escura e "suja", nunca preto puro */
+  --surface:     #262019;
+  --accent:      #C4553B;  /* 1 cor quente: CTA e pontuação */
+  --text:        #F2EBE3;
+  --text-muted:  #A89684;
+  --linha:       #3A3129;
+
+  --font-display: Georgia, "Times New Roman", serif;   /* só em títulos */
+  --font-text:    system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --raio: 14px;
+  --gap:  14px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-text);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Mobile-first: testar em 390px antes de qualquer outra coisa. */
+.page {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 40px 20px 56px;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* Foco visível em TUDO que é clicável — requisito do checklist. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   MOTIVO GRÁFICO — o elemento que repete em todos os cards.
+   Aqui: código de barras. Um motivo repetido cria mais marca
+   que cinco efeitos diferentes.
+   ============================================================ */
+.ornamento {
+  display: block;
+  height: 18px;
+  margin-top: 16px;
+  opacity: .45;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--text) 0 1px, transparent 1px 3px,
+    var(--text) 3px 5px, transparent 5px 9px
+  );
+}
+
+/* ============================================================
+   BLOCO 1 — IDENTIDADE
+   ============================================================ */
+.identidade { text-align: center; margin-bottom: 32px; }
+
+.avatar {
+  width: 112px; height: 112px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--linha);
+}
+
+.nome {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 400;
+  margin: 16px 0 8px;
+}
+
+.promessa {
+  margin: 0 auto 20px;
+  max-width: 32ch;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.sociais { display: flex; justify-content: center; gap: 8px; }
+
+/* Área de toque mínima de 44x44 — não negociável no mobile. */
+.sociais a {
+  display: grid;
+  place-items: center;
+  width: 44px; height: 44px;
+  color: var(--text-muted);
+  transition: color .15s ease;
+}
+.sociais a:hover { color: var(--accent); }
+.sociais svg { width: 22px; height: 22px; fill: currentColor; }
+
+.tagline {
+  margin-top: 20px;
+  font-size: .75rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: .6;
+}
+
+/* ============================================================
+   BLOCOS 2 e 3 — CARDS
+   As 4 camadas: categoria, nome próprio, benefício, ornamento.
+   ============================================================ */
+.cards { display: grid; gap: var(--gap); }
+
+.card {
+  display: block;
+  position: relative;
+  padding: 20px;
+  margin-bottom: var(--gap);
+  background: var(--surface);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  transition: transform .15s ease, border-color .15s ease;
+}
+.card:last-child { margin-bottom: 0; }
+.card:hover { transform: translateY(-2px); border-color: var(--accent); }
+
+/* O card principal precisa ser visivelmente diferente dos outros. */
+.card--principal {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 12px 32px -16px var(--accent);
+}
+
+.card__categoria {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.card__nome {
+  display: block;
+  margin-top: 2px;
+  font-size: .8rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.card__beneficio {
+  display: block;
+  margin-top: 10px;
+  font-size: .9rem;
+  color: var(--text-muted);
+}
+/* A parte decisiva do benefício, em acento. */
+.card__beneficio em { color: var(--accent); font-style: italic; }
+
+/* ============================================================
+   BLOCO 4 — PROVA SOCIAL
+   ============================================================ */
+.prova { margin: 36px 0; text-align: center; }
+
+.prova__numero { margin: 0 0 20px; color: var(--text-muted); font-size: .9rem; }
+.prova__numero strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  color: var(--text);
+}
+
+.depoimento {
+  margin: 0;
+  padding: 18px;
+  background: var(--surface);
+  border-radius: var(--raio);
+}
+.depoimento blockquote {
+  margin: 0;
+  font-size: .95rem;
+  font-style: italic;
+}
+.depoimento blockquote::before { content: "“"; color: var(--accent); }
+.depoimento blockquote::after  { content: "”"; color: var(--accent); }
+
+.depoimento figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: .8rem;
+  color: var(--text-muted);
+}
+.depoimento img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+
+.logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: .75rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: .7;
+}
+
+/* ============================================================
+   BLOCO 5 — CAPTURA DE LEAD
+   ============================================================ */
+.captura {
+  padding: 22px 20px;
+  border: 1px dashed var(--linha);
+  border-radius: var(--raio);
+}
+.captura h2 {
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 400;
+}
+.captura label {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.captura input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  background: var(--bg);
+  border: 1px solid var(--linha);
+  border-radius: 8px;
+  color: var(--text);
+  font: inherit;
+}
+.captura button {
+  width: 100%;
+  min-height: 46px;
+  margin-top: 8px;
+  background: var(--accent);
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.captura button:hover { filter: brightness(1.08); }
+
+/* ============================================================
+   BLOCO 6 — RODAPÉ
+   ============================================================ */
+.rodape {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--linha);
+  text-align: center;
+  font-size: .85rem;
+  color: var(--text-muted);
+}
+.rodape h2 {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.rodape a { border-bottom: 1px solid var(--accent); }
+.copyright { margin-top: 18px; opacity: .6; font-size: .78rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

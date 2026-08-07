@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- TODO(brief): title = "Nome — promessa curta" -->
+<title>{{NOME}} — {{PROMESSA_CURTA}}</title>
+<meta name="description" content="{{PROMESSA}}">
+
+<!-- Open Graph: é o que aparece quando alguém manda o link no WhatsApp -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{NOME}} — {{PROMESSA_CURTA}}">
+<meta property="og:description" content="{{PROMESSA}}">
+<meta property="og:image" content="assets/og.jpg">
+<meta name="theme-color" content="#1E1916">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<main class="page">
+
+  <!-- ============================================================
+       BLOCO 1 — IDENTIDADE (acima da dobra)
+       ============================================================ -->
+  <header class="identidade">
+    <img class="avatar"
+         src="assets/foto.jpg"
+         alt="{{ALT: descreva a pessoa, não escreva 'foto de perfil'}}"
+         width="112" height="112">
+
+    <h1 class="nome">{{NOME}}</h1>
+
+    <!-- Promessa, não bio. [verbo] + [habilidade] + [resultado tangível] -->
+    <p class="promessa">
+      {{PROMESSA — ex: "Aprenda a se comunicar com clareza e conquiste
+      respeito, audiência e autoridade."}}
+    </p>
+
+    <!-- Ícones sociais: resolve quem só quer seguir e ir embora.
+         Cada <a> tem 44x44 de área de toque garantida no CSS. -->
+    <nav class="sociais" aria-label="Redes sociais">
+      <a href="{{URL_INSTAGRAM}}" data-card="social-instagram" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-instagram"></use></svg>
+      </a>
+      <a href="{{URL_YOUTUBE}}" data-card="social-youtube" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-youtube"></use></svg>
+      </a>
+      <a href="{{URL_TIKTOK}}" data-card="social-tiktok" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tiktok"></use></svg>
+      </a>
+    </nav>
+
+    <p class="tagline">{{TAGLINE_DISCRETA}}</p>
+  </header>
+
+
+  <!-- ============================================================
+       BLOCO 2 — OFERTA PRINCIPAL (1 card, destacado)
+       O único CTA que você realmente quer que cliquem.
+       ============================================================ -->
+  <a class="card card--principal"
+     href="{{URL_OFERTA_PRINCIPAL}}"
+     data-card="{{utm_content: card-1}}">
+    <span class="card__categoria">{{CATEGORIA}}</span>
+    <span class="card__nome">{{NOME_PROPRIO_DA_OFERTA}}</span>
+    <span class="card__beneficio">
+      {{BENEFÍCIO em 1–2 linhas}}
+      <em>{{a parte decisiva vai em acento}}</em>
+    </span>
+    <span class="ornamento" aria-hidden="true"></span>
+  </a>
+
+
+  <!-- ============================================================
+       BLOCO 3 — OFERTAS SECUNDÁRIAS
+       Ordem: produto pago → produto de entrada → conteúdo grátis.
+       Dinheiro antes de conteúdo grátis.
+       ============================================================ -->
+  <section class="cards" aria-label="Outras ofertas">
+
+    <a class="card" href="{{URL_2}}" data-card="{{utm_content: card-2}}">
+      <span class="card__categoria">{{CATEGORIA}}</span>
+      <span class="card__nome">{{NOME_PROPRIO}}</span>
+      <span class="card__beneficio">{{BENEFÍCIO}} <em>{{acento}}</em></span>
+      <span class="ornamento" aria-hidden="true"></span>
+    </a>
+
+    <a class="card" href="{{URL_3}}" data-card="{{utm_content: card-3}}">
+      <span class="card__categoria">{{CATEGORIA}}</span>
+      <span class="card__nome">{{NOME_PROPRIO}}</span>
+      <span class="card__beneficio">{{BENEFÍCIO}} <em>{{acento}}</em></span>
+      <span class="ornamento" aria-hidden="true"></span>
+    </a>
+
+  </section>
+
+
+  <!-- ============================================================
+       BLOCO 4 — PROVA SOCIAL
+       ============================================================ -->
+  <section class="prova" aria-label="Prova social">
+    <p class="prova__numero"><strong>{{NÚMERO}}</strong> {{o que o número é}}</p>
+
+    <figure class="depoimento">
+      <blockquote>{{DEPOIMENTO_CURTO}}</blockquote>
+      <figcaption>
+        <img src="assets/depoimento-1.jpg" alt="{{ALT}}" width="40" height="40" loading="lazy">
+        <span>{{NOME_DE_QUEM_FALOU}}</span>
+      </figcaption>
+    </figure>
+
+    <ul class="logos" aria-label="Veículos e marcas">
+      <li>{{LOGO_1}}</li>
+      <li>{{LOGO_2}}</li>
+      <li>{{LOGO_3}}</li>
+    </ul>
+  </section>
+
+
+  <!-- ============================================================
+       BLOCO 5 — CAPTURA DE LEAD
+       Se o Instagram cair amanhã, é isto que sobra.
+       ============================================================ -->
+  <section class="captura">
+    <h2>{{ISCA — ex: "Receba 1 técnica de comunicação por semana"}}</h2>
+
+    <!-- TODO(brief): trocar action pelo endpoint real (Beehiiv, ConvertKit,
+         Mailchimp…) OU substituir o form inteiro por um link de grupo/lista. -->
+    <form action="{{ENDPOINT_DO_FORM}}" method="post">
+      <label for="email">Seu e-mail</label>
+      <input id="email" name="email" type="email" autocomplete="email"
+             required placeholder="voce@email.com">
+      <button type="submit" data-card="captura-email">Quero receber</button>
+    </form>
+  </section>
+
+
+  <!-- ============================================================
+       BLOCO 6 — CONTATO E RODAPÉ
+       ============================================================ -->
+  <footer class="rodape">
+    <h2>Contato</h2>
+    <!-- mailto:, nunca link do Gmail. E o e-mail visível em texto. -->
+    <p><a href="mailto:{{EMAIL}}" data-card="contato-email">{{EMAIL}}</a></p>
+    <p class="copyright">© <span id="ano"></span> — {{NOME}}</p>
+  </footer>
+
+</main>
+
+<!-- Sprite dos ícones. Substituir os path por SVG real de cada rede. -->
+<svg hidden aria-hidden="true">
+  <symbol id="i-instagram" viewBox="0 0 24 24"><path d="{{PATH}}"/></symbol>
+  <symbol id="i-youtube"   viewBox="0 0 24 24"><path d="{{PATH}}"/></symbol>
+  <symbol id="i-tiktok"    viewBox="0 0 24 24"><path d="{{PATH}}"/></symbol>
+</svg>
+
+<script>
+  document.getElementById('ano').textContent = new Date().getFullYear();
+
+  // Evento de clique por card. Cada link carrega o mesmo rótulo que vai
+  // no utm_content, pra bater com a tabela de controle da seção 5.
+  document.querySelectorAll('[data-card]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      if (typeof gtag === 'function') {
+        gtag('event', 'click_card', { card: el.dataset.card });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
