@@ -4,21 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- TODO(brief): title = "Nome — promessa curta" -->
-<title>{{NOME}} — {{PROMESSA_CURTA}}</title>
-<meta name="description" content="{{PROMESSA}}">
+<title>Natiele Soardi — Psicanalista Clínica</title>
+<meta name="description" content="Psicanálise clínica com atendimento online. Entenda o que se repete na sua história e comece a escolher o que vem depois.">
 
-<!-- Sai daqui quando o conteúdo real entrar. Enquanto for placeholder,
-     a página não pode ser indexada. -->
-<meta name="robots" content="noindex">
-
-<!-- Open Graph: é o que aparece quando alguém manda o link no WhatsApp.
-     TODO(brief): criar assets/og.jpg (1200x630) e reativar. -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="{{NOME}} — {{PROMESSA_CURTA}}">
-<meta property="og:description" content="{{PROMESSA}}">
-<meta name="theme-color" content="#1E1916">
+<meta property="og:title" content="Natiele Soardi — Psicanalista Clínica">
+<meta property="og:description" content="Entenda o que se repete na sua história e comece a escolher o que vem depois.">
+<meta property="og:image" content="assets/natiele-capa.jpg">
+<meta property="og:locale" content="pt_BR">
+<meta name="theme-color" content="#14110F">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -26,72 +24,86 @@
 <main class="page">
 
   <!-- ============================================================
-       BLOCO 1 — IDENTIDADE (acima da dobra)
+       BLOCO 1 — IDENTIDADE
        ============================================================ -->
   <header class="identidade">
-    <!-- TODO(brief): trocar por
-         <img class="avatar" src="assets/foto.jpg" width="112" height="112"
-              alt="{{ALT: descreva a pessoa, não escreva 'foto de perfil'}}"> -->
-    <div class="avatar avatar--vazio" aria-hidden="true">foto</div>
+    <img class="avatar"
+         src="assets/natiele-retrato.jpg"
+         alt="Natiele Soardi, sorrindo, apoiada na mão, em fundo escuro"
+         width="128" height="128" fetchpriority="high">
 
-    <h1 class="nome">{{NOME}}</h1>
+    <h1 class="nome">Natiele Soardi</h1>
 
-    <!-- Promessa, não bio. [verbo] + [habilidade] + [resultado tangível] -->
     <p class="promessa">
-      {{PROMESSA — ex: "Aprenda a se comunicar com clareza e conquiste
-      respeito, audiência e autoridade."}}
+      Entenda o que se repete na sua história
+      <em>— e comece a escolher o que vem depois.</em>
     </p>
 
-    <!-- Ícones sociais: resolve quem só quer seguir e ir embora.
-         Cada <a> tem 44x44 de área de toque garantida no CSS. -->
-    <!-- TODO(brief): as siglas viram SVG real de cada rede. O aria-label
-         fica de qualquer jeito — ícone sem nome acessível não existe. -->
     <nav class="sociais" aria-label="Redes sociais">
-      <a href="{{URL_INSTAGRAM}}" data-card="social-instagram" aria-label="Instagram">IG</a>
-      <a href="{{URL_YOUTUBE}}" data-card="social-youtube" aria-label="YouTube">YT</a>
-      <a href="{{URL_TIKTOK}}" data-card="social-tiktok" aria-label="TikTok">TT</a>
+      <a href="https://instagram.com/natisoardi" data-card="social-instagram" aria-label="Instagram de Natiele Soardi" rel="me">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-instagram"></use></svg>
+      </a>
+      <a href="https://youtube.com/@nati.soardi" data-card="social-youtube" aria-label="Canal NATerapia no YouTube" rel="me">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-youtube"></use></svg>
+      </a>
+      <a href="https://www.tiktok.com/@nati.soardi" data-card="social-tiktok" aria-label="TikTok de Natiele Soardi" rel="me">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tiktok"></use></svg>
+      </a>
     </nav>
 
-    <p class="tagline">{{TAGLINE_DISCRETA}}</p>
+    <p class="tagline">Psicanálise Clínica · Atendimento Online</p>
   </header>
 
 
   <!-- ============================================================
-       BLOCO 2 — OFERTA PRINCIPAL (1 card, destacado)
-       O único CTA que você realmente quer que cliquem.
+       BLOCO 2 — OFERTA PRINCIPAL
+       O link do WhatsApp vai com mensagem pré-preenchida: é assim que
+       ela sabe de qual card a pessoa veio, sem depender de analytics.
        ============================================================ -->
   <a class="card card--principal"
-     href="{{URL_OFERTA_PRINCIPAL}}"
-     data-card="{{utm_content: card-1}}">
-    <span class="card__categoria">{{CATEGORIA}}</span>
-    <span class="card__nome">{{NOME_PROPRIO_DA_OFERTA}}</span>
+     href="https://wa.me/34643201528?text=Oi%2C%20Natiele!%20Vim%20pelo%20seu%20link%20e%20quero%20saber%20sobre%20a%20terapia%20individual."
+     data-card="card-1-individual">
+    <span class="card__indice" aria-hidden="true">01</span>
+    <span class="card__categoria">Terapia Individual</span>
+    <span class="card__nome">Sessões online</span>
     <span class="card__beneficio">
-      {{BENEFÍCIO em 1–2 linhas}}
-      <em>{{a parte decisiva vai em acento}}</em>
+      Um espaço só seu para escutar o que se repete
+      <em>— e entender de onde isso vem.</em>
     </span>
-    <span class="ornamento" aria-hidden="true"></span>
+    <span class="card__acao">Falar no WhatsApp</span>
   </a>
 
 
   <!-- ============================================================
        BLOCO 3 — OFERTAS SECUNDÁRIAS
-       Ordem: produto pago → produto de entrada → conteúdo grátis.
-       Dinheiro antes de conteúdo grátis.
+       Ordem: pago → gratuito.
        ============================================================ -->
-  <section class="cards" aria-label="Outras ofertas">
+  <section class="cards" aria-label="Outras formas de trabalhar comigo">
 
-    <a class="card" href="{{URL_2}}" data-card="{{utm_content: card-2}}">
-      <span class="card__categoria">{{CATEGORIA}}</span>
-      <span class="card__nome">{{NOME_PROPRIO}}</span>
-      <span class="card__beneficio">{{BENEFÍCIO}} <em>{{acento}}</em></span>
-      <span class="ornamento" aria-hidden="true"></span>
+    <a class="card"
+       href="https://wa.me/34643201528?text=Oi%2C%20Natiele!%20Vim%20pelo%20seu%20link%20e%20quero%20saber%20sobre%20a%20terapia%20de%20casal."
+       data-card="card-2-casal">
+      <span class="card__indice" aria-hidden="true">02</span>
+      <span class="card__categoria">Terapia de Casal</span>
+      <span class="card__nome">Para os dois</span>
+      <span class="card__beneficio">
+        Quando o problema não é de um nem do outro,
+        <em>mas do que acontece entre os dois.</em>
+      </span>
+      <span class="card__acao">Falar no WhatsApp</span>
     </a>
 
-    <a class="card" href="{{URL_3}}" data-card="{{utm_content: card-3}}">
-      <span class="card__categoria">{{CATEGORIA}}</span>
-      <span class="card__nome">{{NOME_PROPRIO}}</span>
-      <span class="card__beneficio">{{BENEFÍCIO}} <em>{{acento}}</em></span>
-      <span class="ornamento" aria-hidden="true"></span>
+    <a class="card"
+       href="https://youtube.com/@nati.soardi"
+       data-card="card-3-youtube">
+      <span class="card__indice" aria-hidden="true">03</span>
+      <span class="card__categoria">NATerapia</span>
+      <span class="card__nome">Canal no YouTube</span>
+      <span class="card__beneficio">
+        Psicanálise em linguagem simples,
+        <em>sem precisar de dicionário.</em>
+      </span>
+      <span class="card__acao">Assistir</span>
     </a>
 
   </section>
@@ -99,42 +111,37 @@
 
   <!-- ============================================================
        BLOCO 4 — PROVA SOCIAL
-       ============================================================ -->
+       Deliberadamente vazio: não há depoimento nem número real ainda,
+       e inventar isso é fabricar prova. A marcação já está pronta —
+       basta preencher e descomentar.
+
   <section class="prova" aria-label="Prova social">
-    <p class="prova__numero"><strong>{{NÚMERO}}</strong> {{o que o número é}}</p>
-
+    <p class="prova__numero"><strong>NÚMERO</strong> o que o número é</p>
     <figure class="depoimento">
-      <blockquote>{{DEPOIMENTO_CURTO}}</blockquote>
-      <!-- TODO(brief): foto de quem deu o depoimento entra aqui, com
-           loading="lazy" por estar abaixo da dobra. -->
-      <figcaption>
-        <span>{{NOME_DE_QUEM_FALOU}}</span>
-      </figcaption>
+      <blockquote>Depoimento real, curto, com autorização de quem falou.</blockquote>
+      <figcaption><span>Primeiro nome + inicial</span></figcaption>
     </figure>
-
-    <ul class="logos" aria-label="Veículos e marcas">
-      <li>{{LOGO_1}}</li>
-      <li>{{LOGO_2}}</li>
-      <li>{{LOGO_3}}</li>
+    <ul class="credenciais">
+      <li>Formação</li><li>Abordagem</li><li>Anos de clínica</li>
     </ul>
   </section>
+
+       ============================================================ -->
 
 
   <!-- ============================================================
        BLOCO 5 — CAPTURA DE LEAD
-       Se o Instagram cair amanhã, é isto que sobra.
+       O ebook é o motor de e-mail: o formulário é dela, o contato fica
+       com ela. É o que sobra se o Instagram cair amanhã.
        ============================================================ -->
   <section class="captura">
-    <h2>{{ISCA — ex: "Receba 1 técnica de comunicação por semana"}}</h2>
-
-    <!-- TODO(brief): trocar action pelo endpoint real (Beehiiv, ConvertKit,
-         Mailchimp…) OU substituir o form inteiro por um link de grupo/lista. -->
-    <form action="{{ENDPOINT_DO_FORM}}" method="post">
-      <label for="email">Seu e-mail</label>
-      <input id="email" name="email" type="email" autocomplete="email"
-             required placeholder="voce@email.com">
-      <button type="submit" data-card="captura-email">Quero receber</button>
-    </form>
+    <h2>Ebook gratuito</h2>
+    <p>O primeiro passo pode ser uma leitura. Baixe e comece por onde der.</p>
+    <a class="botao"
+       href="https://docs.google.com/forms/d/e/1FAIpQLSeng9vDHbaFd0kQXUiOUQ6dayDhYp6i_NZf8ybJsOnSvbLvDA/viewform"
+       data-card="captura-ebook">
+      Quero receber o ebook
+    </a>
   </section>
 
 
@@ -143,18 +150,28 @@
        ============================================================ -->
   <footer class="rodape">
     <h2>Contato</h2>
-    <!-- mailto:, nunca link do Gmail. E o e-mail visível em texto. -->
-    <p><a href="mailto:{{EMAIL}}" data-card="contato-email">{{EMAIL}}</a></p>
-    <p class="copyright">© <span id="ano"></span> — {{NOME}}</p>
+    <p>
+      <a href="https://wa.me/34643201528" data-card="contato-whatsapp">WhatsApp</a>
+      <!-- TODO(Natiele): e-mail profissional visível em texto, via mailto:.
+           <a href="mailto:contato@exemplo.com">contato@exemplo.com</a> -->
+    </p>
+    <p class="copyright">© <span id="ano"></span> — Natiele Martins Soardi Vieira</p>
   </footer>
 
 </main>
 
+
+<!-- Sprite dos ícones sociais -->
+<svg hidden aria-hidden="true">
+  <symbol id="i-instagram" viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.06 1.17-.26 1.8-.42 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.07.36-2.24.41-1.27.06-1.65.07-4.86.07s-3.59-.01-4.86-.07c-1.17-.06-1.82-.26-2.24-.42-.57-.22-.96-.48-1.38-.9-.42-.42-.69-.82-.9-1.38-.16-.42-.36-1.06-.42-2.23C2.11 15.58 2.1 15.2 2.1 12s.01-3.59.07-4.86c.06-1.17.26-1.81.42-2.23.21-.57.48-.96.9-1.38.42-.42.81-.69 1.38-.9.42-.17 1.05-.36 2.22-.42C8.36 2.17 8.74 2.16 12 2.16zM12 0C8.74 0 8.33.02 7.05.07c-1.28.06-2.15.26-2.91.56-.79.31-1.46.72-2.13 1.38S.94 3.35.63 4.14c-.3.77-.5 1.64-.56 2.91C.01 8.33 0 8.74 0 12s.02 3.67.07 4.95c.06 1.28.26 2.15.56 2.91.31.79.72 1.46 1.38 2.13.67.67 1.34 1.08 2.13 1.38.77.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.02 4.95-.07c1.28-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.38.67-.67 1.08-1.34 1.38-2.13.3-.77.5-1.64.56-2.91.05-1.28.07-1.69.07-4.95s-.02-3.67-.07-4.95c-.06-1.28-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.38-2.13-.67-.67-1.34-1.08-2.13-1.38-.77-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm7.85-10.41a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/></symbol>
+  <symbol id="i-youtube" viewBox="0 0 24 24"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.87.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></symbol>
+  <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M12.53.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></symbol>
+</svg>
+
 <script>
   document.getElementById('ano').textContent = new Date().getFullYear();
 
-  // Evento de clique por card. Cada link carrega o mesmo rótulo que vai
-  // no utm_content, pra bater com a tabela de controle da seção 5.
+  // Evento de clique por card, pronto pro GA4 quando o pixel entrar.
   document.querySelectorAll('[data-card]').forEach(function (el) {
     el.addEventListener('click', function () {
       if (typeof gtag === 'function') {
