@@ -1,64 +1,79 @@
 /* ============================================================
-   SISTEMA VISUAL — Natiele Soardi, psicanálise clínica.
+   SISTEMA VISUAL — Natiele Soardi
+   Registro: neoclássico. Sala de museu, não landing page.
 
-   A marca dela já é preto + branco + sans (a arte de capa).
-   Aqui o preto vira quente (nunca puro, regra do blueprint) e ganha
-   um acento âmbar: cor de abajur, não de alerta. Psicanálise pede
-   acolhimento, não urgência de venda.
+   Duas famílias, cada uma com um trabalho:
+   · Cinzel — capitais romanas de inscrição. Só em títulos e rótulos,
+     sempre em caixa alta com entrelinha larga. É a pedra.
+   · Cormorant Garamond — serifada de livro. Todo texto corrido e as
+     ênfases em itálico. É o papel.
 
-   Trocar a paleta inteira = trocar as 6 linhas abaixo.
+   Trocar a paleta inteira = trocar as 7 linhas de cor abaixo.
    ============================================================ */
 :root {
-  --bg:          #14110F;  /* preto quente, "sujo" */
-  --surface:     #1D1917;
-  --accent:      #D9A066;  /* âmbar */
-  --text:        #F2ECE5;
-  --text-muted:  #A1958A;
-  --linha:       #332C27;
+  --bg:          #12100E;  /* preto quente, nunca puro */
+  --surface:     #1B1714;
+  --accent:      #D9A066;  /* âmbar: luz de abajur, não de alerta */
+  --bronze:      #8E6C42;  /* ornamento: grega, capitéis, louros */
+  --marmore:     #EDE5D8;  /* mármore: títulos e citações */
+  --text:        #E4DCD0;
+  --text-muted:  #9E9280;
+  --linha:       #322A22;
 
-  --font-display: "Instrument Serif", Georgia, serif;
-  --font-text:    "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Cinzel", "Times New Roman", serif;
+  --font-text:    "Cormorant Garamond", Georgia, serif;
 
-  --raio: 16px;
-  --gap:  12px;
+  --raio: 2px;             /* pedra não tem canto arredondado */
+  --gap:  14px;
+  --coluna: 452px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
+
+/* Nenhuma camada decorativa pode alargar o documento. */
+html { overflow-x: hidden; }
 
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-text);
-  font-size: 16px;
-  line-height: 1.55;
+  font-size: 17px;
+  line-height: 1.62;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Biblioteca de ornamentos: fora do fluxo, mas nunca display:none —
+   alguns navegadores param de resolver <use> e <pattern> escondidos
+   desse jeito. O color aqui é o que a grega herda. */
+.biblioteca {
+  position: absolute;
+  width: 0; height: 0;
+  overflow: hidden;
+  color: var(--bronze);
 }
 
 /* ============================================================
-   FUNDO — a galeria.
-
-   A imagem é CAMADA, nunca base: o --bg sólido fica embaixo. Se
-   assets/galeria.jpg faltar ou demorar a carregar, a página continua
-   legível e ninguém percebe. Nada aqui carrega texto ou função.
-
-   position: fixed no pseudo-elemento em vez de background-attachment,
-   porque o Safari no iOS ignora "fixed" em background.
+   FUNDO
+   Camada 1: a luz quente vindo do fundo do corredor. É CSS puro,
+   então existe sempre, mesmo sem nenhuma imagem.
+   Camada 2: assets/galeria.jpg, se houver — opcional por definição.
+   Camada 3: véu e vinheta, que garantem o contraste do texto.
    ============================================================ */
 body::before {
   content: "";
   position: fixed;
-  inset: -5vh -5vw;          /* folga pra deriva nunca mostrar borda */
+  inset: 0;                /* nunca ultrapassa a viewport: a folga da
+                              deriva vem do scale, não do tamanho */
   z-index: 0;
-  background-image: url("assets/galeria.jpg");
+  background-image: url("assets/galeria.webp");
   background-size: cover;
   background-position: center 30%;
-  opacity: .32;
-  animation: deriva 52s ease-in-out infinite alternate;
+  opacity: .26;
+  animation: deriva 60s ease-in-out infinite alternate;
 }
 
-/* Véu quente + vinheta. É isto que garante o contraste do texto:
-   sem o véu, o mármore claro do corredor come as letras. */
 body::after {
   content: "";
   position: fixed;
@@ -66,25 +81,59 @@ body::after {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(125% 75% at 50% 6%,
-      rgba(20,17,15,.30) 0%, rgba(20,17,15,.66) 55%, rgba(20,17,15,.92) 100%),
+    radial-gradient(88% 46% at 50% -6%, rgba(217,160,102,.20), transparent 62%),
+    radial-gradient(130% 80% at 50% 4%,
+      rgba(18,16,14,.20) 0%, rgba(18,16,14,.62) 56%, rgba(18,16,14,.93) 100%),
     linear-gradient(to bottom,
-      rgba(20,17,15,.66) 0%, rgba(20,17,15,.86) 42%, var(--bg) 90%);
+      rgba(18,16,14,.50) 0%, rgba(18,16,14,.84) 46%, var(--bg) 92%);
 }
 
-/* A galeria respira devagar; o texto não se mexe junto. */
 @keyframes deriva {
   from { transform: scale(1.04) translate3d(0, 0, 0); }
   to   { transform: scale(1.12) translate3d(0, -1.5%, 0); }
 }
 
-/* Mobile-first: 390px é o alvo, não o caso de borda. */
+/* ============================================================
+   COLUNATA — capitéis dórico, jônico e coríntio nas laterais.
+   Só em telas largas, onde sobra espaço fora da coluna de leitura.
+   No celular não existem: não roubam um pixel do conteúdo, e o
+   arquivo nem é baixado porque a regra vive dentro da media query.
+   ============================================================ */
+.colunata { display: none; }
+
+@media (min-width: 1040px) {
+  .colunata { display: block; }
+
+  .coluna {
+    position: fixed;
+    bottom: 0;
+    width: 232px;
+    height: 76vh;
+    z-index: 0;
+    pointer-events: none;
+    background: url("assets/colunas.webp") no-repeat bottom center;
+    background-size: contain;
+    opacity: .17;
+    /* esfria o marfim para o âmbar da página */
+    filter: sepia(.4) saturate(.85) brightness(.9);
+    /* nascem do chão e se dissolvem antes de disputar com o texto */
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 34%);
+            mask-image: linear-gradient(to bottom, transparent, #000 34%);
+  }
+  .coluna--esq { left:  max(8px, calc(50% - var(--coluna) / 2 - 252px)); }
+  .coluna--dir { right: max(8px, calc(50% - var(--coluna) / 2 - 252px));
+                 transform: scaleX(-1); }
+}
+
+/* ============================================================
+   PÁGINA
+   ============================================================ */
 .page {
   position: relative;
-  z-index: 1;                /* o conteúdo vive acima das duas camadas */
-  max-width: 448px;
+  z-index: 1;
+  max-width: var(--coluna);
   margin: 0 auto;
-  padding: 44px 20px 56px;
+  padding: 40px 22px 60px;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -92,240 +141,394 @@ a { color: inherit; text-decoration: none; }
 a:focus-visible,
 button:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 6px;
+  outline-offset: 4px;
 }
 
 /* ============================================================
-   BLOCO 1 — IDENTIDADE
+   REVELAÇÃO — entrada em cascata.
+   A classe .com-revelacao só entra via JS, e só quando a pessoa
+   não pediu menos movimento. Sem JS, tudo nasce visível: a
+   animação nunca é condição para ler a página.
    ============================================================ */
-.identidade { text-align: center; margin-bottom: 36px; }
+.com-revelacao [data-revela] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.3,1);
+}
+.com-revelacao [data-revela].revelado {
+  opacity: 1;
+  transform: none;
+}
+
+/* ============================================================
+   BLOCO 1 — PÓRTICO
+   ============================================================ */
+.portico {
+  position: relative;
+  text-align: center;
+  padding-top: 26px;
+  margin-bottom: 30px;
+}
+
+/* O arco se desenha sozinho na chegada, como traço de projeto. */
+.arco {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 260px; height: 150px;
+  color: var(--bronze);
+  opacity: .55;
+  pointer-events: none;
+}
+.arco__linha {
+  stroke-dasharray: 1;      /* funciona porque o path tem pathLength="1" */
+  stroke-dashoffset: 1;
+  animation: tracar 2.6s cubic-bezier(.3,.8,.3,1) .15s forwards;
+}
+.arco__linha--interna { animation-duration: 3.1s; animation-delay: .35s; }
+.arco__chave {
+  opacity: 0;
+  animation: surgir 1s ease 1.6s forwards;
+}
+@keyframes tracar { to { stroke-dashoffset: 0; } }
+@keyframes surgir { to { opacity: .85; } }
 
 .avatar {
+  position: relative;
   width: 128px; height: 128px;
   border-radius: 50%;
-  object-fit: cover;             /* o recorte no rosto já vem do arquivo */
-  border: 1px solid var(--linha);
+  object-fit: cover;
+  border: 1px solid rgba(217,160,102,.35);
+  box-shadow: 0 0 0 6px rgba(18,16,14,.75), 0 18px 40px -20px #000;
 }
 
 .nome {
   font-family: var(--font-display);
-  font-size: 2.5rem;
+  font-weight: 600;
+  /* Cabe em 390px com o entreletras largo; se não couber, quebra em
+     duas linhas sem estourar a coluna. */
+  font-size: clamp(1.4rem, 6.2vw, 1.95rem);
+  line-height: 1.24;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--marmore);
+  margin: 20px 0 10px;
+  overflow-wrap: break-word;
+}
+
+/* A inscrição sob o nome, como placa de museu. */
+.epigrafe {
+  margin: 0 0 18px;
+  font-family: var(--font-display);
+  font-size: .62rem;
   font-weight: 400;
-  letter-spacing: .01em;
-  margin: 18px 0 10px;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: .85;
 }
 
 .promessa {
-  margin: 0 auto 22px;
-  max-width: 30ch;
-  font-size: 1.02rem;
-  color: var(--text-muted);
+  margin: 0 auto 24px;
+  max-width: 26ch;
+  font-size: 1.28rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--marmore);
 }
 .promessa em { color: var(--accent); font-style: italic; }
 
-.sociais { display: flex; justify-content: center; gap: 6px; }
+.sociais { display: flex; justify-content: center; gap: 8px; }
 
-/* 44x44 de área de toque, mesmo com o ícone menor que isso. */
+/* 44x44 de área de toque, com o ícone menor dentro. */
 .sociais a {
   display: grid;
   place-items: center;
   width: 44px; height: 44px;
   color: var(--text-muted);
-  transition: color .15s ease;
+  transition: color .2s ease, transform .2s ease;
 }
-.sociais a:hover { color: var(--accent); }
-.sociais svg { width: 21px; height: 21px; fill: currentColor; }
+.sociais a:hover { color: var(--accent); transform: translateY(-2px); }
+.sociais svg { width: 20px; height: 20px; fill: currentColor; }
 
 .tagline {
   margin-top: 18px;
-  font-size: .7rem;
-  letter-spacing: .22em;
+  font-family: var(--font-display);
+  font-size: .58rem;
+  letter-spacing: .3em;
   text-transform: uppercase;
   color: var(--text-muted);
-  opacity: .65;
+  opacity: .7;
 }
 
 /* ============================================================
-   BLOCOS 2 e 3 — CARDS
-   Camadas: índice, categoria, nome próprio, benefício, ação.
+   FRISO — a grega. O motivo que repete e amarra a página.
+   ============================================================ */
+.friso {
+  height: 16px;
+  margin: 34px 0;
+  opacity: .5;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 22%, #000 78%, transparent);
+          mask-image: linear-gradient(to right, transparent, #000 22%, #000 78%, transparent);
+}
+.friso svg { display: block; width: 100%; height: 16px; }
 
-   MOTIVO GRÁFICO da marca: o fio — uma linha fina que atravessa o
-   topo de todo card, começando por um ponto âmbar. É a mesma marca
-   repetida em todos, e é ela que dá unidade à página.
+/* ============================================================
+   BLOCOS 2 e 3 — CARDS
+   Camadas: capitel, numeral, categoria, nome, benefício, ação.
    ============================================================ */
 .cards { display: grid; gap: var(--gap); }
 
 .card {
   display: block;
   position: relative;
-  padding: 26px 20px 20px;
+  padding: 26px 22px 22px;
   margin-bottom: var(--gap);
-  /* Translúcido: a galeria aparece por trás, mas o texto não depende
-     dela pra ter contraste. O blur é enfeite — se o navegador ignorar,
-     a cor sólida por baixo já sustenta a leitura. */
-  background: rgba(29, 25, 23, .84);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  background: rgba(27, 23, 20, .80);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   border: 1px solid var(--linha);
   border-radius: var(--raio);
-  /* Passe-partout: a linha interna de quem emoldura quadro. */
-  box-shadow: inset 0 0 0 1px rgba(217, 160, 102, .07);
-  overflow: hidden;
-  transition: transform .18s ease, border-color .18s ease;
+  /* passe-partout: a linha interna de quem emoldura quadro */
+  box-shadow: inset 0 0 0 1px rgba(217,160,102,.08);
+  transition: transform .3s cubic-bezier(.2,.7,.3,1),
+              border-color .3s ease,
+              box-shadow .3s ease;
 }
 .card:last-child { margin-bottom: 0; }
 
-/* o fio */
-.card::before {
-  content: "";
-  position: absolute;
-  top: 14px; left: 20px; right: 20px;
-  height: 1px;
-  background: linear-gradient(to right, var(--accent) 0 6px, var(--linha) 6px);
+.card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(217,160,102,.55);
+  box-shadow:
+    inset 0 0 0 1px rgba(217,160,102,.18),
+    0 22px 44px -28px #000;
 }
 
-.card:hover { transform: translateY(-2px); border-color: var(--accent); }
-
-/* O principal precisa ser visivelmente outro. */
+/* A obra da sala: moldura dourada e luz própria. */
 .card--principal {
-  border-color: var(--accent);
+  padding-top: 40px;
+  border-color: rgba(217,160,102,.5);
   background:
-    linear-gradient(160deg, rgba(217,160,102,.12), transparent 55%),
-    rgba(29, 25, 23, .88);
+    linear-gradient(168deg, rgba(217,160,102,.13), transparent 58%),
+    rgba(27, 23, 20, .86);
   box-shadow:
-    inset 0 0 0 1px rgba(217, 160, 102, .18),
-    0 16px 40px -24px rgba(217, 160, 102, .5);
+    inset 0 0 0 1px rgba(217,160,102,.22),
+    0 20px 50px -30px rgba(217,160,102,.55);
+}
+
+.card__capitel {
+  position: absolute;
+  top: 12px; left: 50%;
+  transform: translateX(-50%);
+  width: 72px; height: 29px;
+  color: var(--bronze);
+  opacity: .7;
 }
 
 .card__indice {
   position: absolute;
-  top: 24px; right: 20px;
+  top: 22px; right: 22px;
   font-family: var(--font-display);
-  font-size: .95rem;
-  color: var(--text-muted);
-  opacity: .55;
+  font-size: .78rem;
+  letter-spacing: .1em;
+  color: var(--accent);
+  opacity: .5;
 }
+.card--principal .card__indice { top: 40px; }
 
 .card__categoria {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.75rem;
-  line-height: 1.15;
+  font-size: 1.16rem;
+  font-weight: 500;
+  letter-spacing: .07em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: var(--marmore);
 }
 
 .card__nome {
   display: block;
-  margin-top: 4px;
-  font-size: .68rem;
-  font-weight: 500;
-  letter-spacing: .2em;
-  text-transform: uppercase;
+  margin-top: 5px;
+  font-size: 1.02rem;
+  font-style: italic;
+  font-weight: 300;
   color: var(--accent);
 }
 
 .card__beneficio {
   display: block;
   margin-top: 12px;
-  font-size: .92rem;
+  font-size: 1.05rem;
   color: var(--text-muted);
 }
 .card__beneficio em { color: var(--accent); font-style: italic; }
 
-/* A ação: diz o que acontece no clique. */
+/* A ação diz o que acontece no clique. */
 .card__acao {
   display: inline-block;
-  margin-top: 16px;
-  font-size: .78rem;
+  margin-top: 18px;
+  font-family: var(--font-display);
+  font-size: .64rem;
   font-weight: 500;
-  letter-spacing: .06em;
-  color: var(--text);
-  border-bottom: 1px solid var(--accent);
-  padding-bottom: 2px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--marmore);
+  border-bottom: 1px solid rgba(217,160,102,.6);
+  padding-bottom: 4px;
+  transition: border-color .3s ease;
 }
-.card__acao::after { content: " →"; color: var(--accent); }
+.card__acao::after {
+  content: " \2192";
+  color: var(--accent);
+  display: inline-block;
+  transition: transform .3s ease;
+}
+.card:hover .card__acao { border-color: var(--accent); }
+.card:hover .card__acao::after { transform: translateX(4px); }
 
 /* ============================================================
-   BLOCO 4 — PROVA SOCIAL (marcação pronta, conteúdo pendente)
+   BLOCO 4 — PROVA SOCIAL (estilizada, conteúdo pendente)
    ============================================================ */
-.prova { margin: 36px 0; text-align: center; }
-.prova__numero { margin: 0 0 20px; color: var(--text-muted); font-size: .9rem; }
-.prova__numero strong {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 2.4rem;
-  color: var(--text);
+.prova { margin: 34px 0; text-align: center; }
+
+.depoimento {
+  margin: 0;
+  padding: 26px 22px;
+  background: rgba(27,23,20,.62);
+  border-top: 1px solid var(--linha);
+  border-bottom: 1px solid var(--linha);
 }
-.depoimento { margin: 0; padding: 20px; background: var(--surface); border-radius: var(--raio); }
-.depoimento blockquote { margin: 0; font-size: .95rem; font-style: italic; }
-.depoimento figcaption { margin-top: 12px; font-size: .78rem; color: var(--text-muted); }
+.depoimento blockquote {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--marmore);
+}
+.depoimento blockquote::before { content: "“"; color: var(--accent); }
+.depoimento blockquote::after  { content: "”"; color: var(--accent); }
+.depoimento figcaption {
+  margin-top: 14px;
+  font-family: var(--font-display);
+  font-size: .6rem;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
 .credenciais {
-  display: flex; flex-wrap: wrap; justify-content: center; gap: 16px;
-  margin: 20px 0 0; padding: 0; list-style: none;
-  font-size: .7rem; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--text-muted); opacity: .75;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 18px;
+  margin: 22px 0 0; padding: 0; list-style: none;
+  font-family: var(--font-display);
+  font-size: .58rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--text-muted);
 }
 
 /* ============================================================
    BLOCO 5 — CAPTURA DE LEAD
    ============================================================ */
 .captura {
-  margin-top: 28px;
-  padding: 24px 20px;
+  position: relative;
+  margin-top: 30px;
+  padding: 44px 22px 26px;
   text-align: center;
-  background: rgba(29, 25, 23, .70);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  background: rgba(27,23,20,.66);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   border: 1px solid var(--linha);
   border-radius: var(--raio);
 }
-.captura h2 {
-  margin: 0 0 8px;
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 400;
+.captura__capitel {
+  position: absolute;
+  top: 12px; left: 50%;
+  transform: translateX(-50%);
+  width: 72px; height: 29px;
+  color: var(--bronze);
+  opacity: .6;
 }
-.captura p { margin: 0 0 18px; font-size: .9rem; color: var(--text-muted); }
+.captura h2 {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--marmore);
+}
+.captura p {
+  margin: 0 0 20px;
+  font-size: 1.05rem;
+  color: var(--text-muted);
+}
 
 .botao {
   display: block;
-  min-height: 48px;
-  line-height: 48px;
-  background: var(--accent);
-  border-radius: 10px;
-  color: #14110F;
-  font-size: .9rem;
+  min-height: 50px;
+  line-height: 50px;
+  background: linear-gradient(180deg, #E0AC74, var(--accent));
+  border-radius: var(--raio);
+  color: #16120E;
+  font-family: var(--font-display);
+  font-size: .68rem;
   font-weight: 600;
-  transition: filter .15s ease;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 30px -18px var(--accent);
+  transition: filter .2s ease, transform .2s ease;
 }
-.botao:hover { filter: brightness(1.07); }
+.botao:hover { filter: brightness(1.06); transform: translateY(-2px); }
 
 /* ============================================================
    BLOCO 6 — RODAPÉ
    ============================================================ */
 .rodape {
-  margin-top: 44px;
-  padding-top: 26px;
-  border-top: 1px solid var(--linha);
+  margin-top: 46px;
+  padding-top: 8px;
   text-align: center;
-  font-size: .88rem;
+  font-size: 1rem;
   color: var(--text-muted);
+}
+.louros {
+  display: block;
+  width: 108px; height: 36px;
+  margin: 0 auto 16px;
+  color: var(--bronze);
+  opacity: .65;
 }
 .rodape h2 {
   margin: 0 0 12px;
   font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 400;
-  letter-spacing: .12em;
+  font-size: .66rem;
+  font-weight: 500;
+  letter-spacing: .3em;
   text-transform: uppercase;
-  color: var(--text);
+  color: var(--marmore);
 }
-.rodape a { border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
-.copyright { margin-top: 20px; opacity: .55; font-size: .75rem; }
+.rodape a {
+  border-bottom: 1px solid rgba(217,160,102,.6);
+  padding-bottom: 2px;
+  transition: border-color .2s ease, color .2s ease;
+}
+.rodape a:hover { color: var(--accent); border-color: var(--accent); }
+.copyright {
+  margin-top: 22px;
+  font-size: .8rem;
+  letter-spacing: .04em;
+  opacity: .5;
+}
 
+/* ============================================================
+   MENOS MOVIMENTO
+   Nada aqui é decorativo-opcional: sem isto a página anima para
+   quem pediu explicitamente que ela não animasse.
+   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     transition: none !important;
-    animation: none !important;   /* a galeria para de derivar */
+    animation: none !important;
   }
+  .arco__linha { stroke-dashoffset: 0; }
+  .arco__chave { opacity: .85; }
 }

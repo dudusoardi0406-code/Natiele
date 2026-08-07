@@ -14,36 +14,109 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="pt_BR">
-<meta name="theme-color" content="#14110F">
+<meta name="theme-color" content="#12100E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+<!-- ================================================================
+     ORNAMENTOS — biblioteca de formas clássicas.
+     Tudo vetorial: nenhuma arte depende de arquivo de imagem, e nada
+     aqui carrega texto ou função. É decoração, e some do leitor de
+     tela inteira via aria-hidden.
+     ================================================================ -->
+<svg class="biblioteca" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- Grega (meandro): o motivo que repete na página inteira.
+         Tile de 16x16, três "U" encaixados — o fret grego clássico. -->
+    <pattern id="grega" width="16" height="16" patternUnits="userSpaceOnUse">
+      <path d="M1,16 V1 H15 V16 M4.5,16 V4.5 H11.5 V16 M8,16 V8"
+            fill="none" stroke="currentColor" stroke-width="1.4"/>
+    </pattern>
+
+    <!-- Capitel jônico simplificado: duas volutas e o ábaco. -->
+    <symbol id="capitel" viewBox="0 0 80 32">
+      <path d="M4 30 H76" stroke="currentColor" stroke-width="1.6" fill="none"/>
+      <path d="M8 26 H72" stroke="currentColor" stroke-width="1" fill="none" opacity=".6"/>
+      <path d="M20 24 C10 24 6 18 10 13 C13 9 20 10 20 16 C20 20 16 21 14 19"
+            fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M60 24 C70 24 74 18 70 13 C67 9 60 10 60 16 C60 20 64 21 66 19"
+            fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M20 24 H60" stroke="currentColor" stroke-width="1.6" fill="none"/>
+      <path d="M40 8 L44 14 L40 20 L36 14 Z" fill="currentColor" opacity=".8"/>
+    </symbol>
+
+    <!-- Ramo de louros para o rodapé. -->
+    <symbol id="louros" viewBox="0 0 120 40">
+      <path d="M60 34 C44 34 30 27 22 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M60 34 C76 34 90 27 98 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      <g fill="currentColor" opacity=".75">
+        <ellipse cx="30" cy="20" rx="5" ry="2.6" transform="rotate(-38 30 20)"/>
+        <ellipse cx="38" cy="26" rx="5" ry="2.6" transform="rotate(-28 38 26)"/>
+        <ellipse cx="47" cy="30" rx="5" ry="2.6" transform="rotate(-16 47 30)"/>
+        <ellipse cx="90" cy="20" rx="5" ry="2.6" transform="rotate(38 90 20)"/>
+        <ellipse cx="82" cy="26" rx="5" ry="2.6" transform="rotate(28 82 26)"/>
+        <ellipse cx="73" cy="30" rx="5" ry="2.6" transform="rotate(16 73 30)"/>
+      </g>
+      <path d="M60 34 L60 38" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    </symbol>
+
+    <symbol id="i-instagram" viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.06 1.17-.26 1.8-.42 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.07.36-2.24.41-1.27.06-1.65.07-4.86.07s-3.59-.01-4.86-.07c-1.17-.06-1.82-.26-2.24-.42-.57-.22-.96-.48-1.38-.9-.42-.42-.69-.82-.9-1.38-.16-.42-.36-1.06-.42-2.23C2.11 15.58 2.1 15.2 2.1 12s.01-3.59.07-4.86c.06-1.17.26-1.81.42-2.23.21-.57.48-.96.9-1.38.42-.42.81-.69 1.38-.9.42-.17 1.05-.36 2.22-.42C8.36 2.17 8.74 2.16 12 2.16zM12 0C8.74 0 8.33.02 7.05.07c-1.28.06-2.15.26-2.91.56-.79.31-1.46.72-2.13 1.38S.94 3.35.63 4.14c-.3.77-.5 1.64-.56 2.91C.01 8.33 0 8.74 0 12s.02 3.67.07 4.95c.06 1.28.26 2.15.56 2.91.31.79.72 1.46 1.38 2.13.67.67 1.34 1.08 2.13 1.38.77.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.02 4.95-.07c1.28-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.38.67-.67 1.08-1.34 1.38-2.13.3-.77.5-1.64.56-2.91.05-1.28.07-1.69.07-4.95s-.02-3.67-.07-4.95c-.06-1.28-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.38-2.13-.67-.67-1.34-1.08-2.13-1.38-.77-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm7.85-10.41a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/></symbol>
+    <symbol id="i-youtube" viewBox="0 0 24 24"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.87.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></symbol>
+    <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M12.53.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></symbol>
+  </defs>
+</svg>
+
+<!-- Colunas caneladas nas laterais. Só aparecem no desktop, onde sobra
+     espaço fora da coluna de leitura. -->
+<div class="colunata" aria-hidden="true">
+  <span class="coluna coluna--esq"></span>
+  <span class="coluna coluna--dir"></span>
+</div>
+
+
 <main class="page">
 
   <!-- ============================================================
-       BLOCO 1 — IDENTIDADE
+       BLOCO 1 — PÓRTICO
+       O arco cita a abóbada do corredor: a pessoa entra na página
+       como quem entra na sala.
        ============================================================ -->
-  <header class="identidade">
-    <!-- 256px de origem para 128 de exibição: nítido em tela retina.
-         WebP porque pesa 3KB contra 8KB do JPEG no mesmo recorte. -->
-    <img class="avatar"
+  <header class="portico">
+
+    <svg class="arco" viewBox="0 0 260 150" aria-hidden="true" focusable="false">
+      <!-- pathLength="1" normaliza o comprimento: o dasharray da
+           animação vira 1 e independe da geometria real do arco. -->
+      <path class="arco__linha" pathLength="1"
+            d="M14 150 V78 A116 78 0 0 1 246 78 V150"
+            fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <path class="arco__linha arco__linha--interna" pathLength="1"
+            d="M28 150 V80 A102 70 0 0 1 232 80 V150"
+            fill="none" stroke="currentColor" stroke-width=".8" opacity=".45"/>
+      <!-- pedra angular -->
+      <path class="arco__chave" d="M130 2 L138 14 L130 26 L122 14 Z"
+            fill="currentColor" opacity=".85"/>
+    </svg>
+
+    <img class="avatar" data-revela
          src="assets/natiele-avatar.webp"
          alt="Natiele Soardi, sorrindo, apoiada na mão, em fundo escuro"
          width="128" height="128" fetchpriority="high">
 
-    <h1 class="nome">Natiele Soardi</h1>
+    <h1 class="nome" data-revela>Natiele Soardi</h1>
 
-    <p class="promessa">
+    <p class="epigrafe" data-revela>Psicanalista Clínica</p>
+
+    <p class="promessa" data-revela>
       Entenda o que se repete na sua história
       <em>— e comece a escolher o que vem depois.</em>
     </p>
 
-    <nav class="sociais" aria-label="Redes sociais">
+    <nav class="sociais" aria-label="Redes sociais" data-revela>
       <a href="https://instagram.com/natisoardi" data-card="social-instagram" aria-label="Instagram de Natiele Soardi" rel="me">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-instagram"></use></svg>
       </a>
@@ -55,19 +128,27 @@
       </a>
     </nav>
 
-    <p class="tagline">Psicanálise Clínica · Atendimento Online</p>
+    <p class="tagline" data-revela>Atendimento Online</p>
   </header>
+
+
+  <!-- Faixa de grega: o mesmo motivo separa todas as seções. -->
+  <div class="friso" data-revela aria-hidden="true">
+    <!-- Sem viewBox de propósito: o tile de 16px do padrão fica em
+         pixels reais e a grega nunca estica junto com a largura. -->
+    <svg width="100%" height="16"><rect width="100%" height="16" fill="url(#grega)"/></svg>
+  </div>
 
 
   <!-- ============================================================
        BLOCO 2 — OFERTA PRINCIPAL
-       O link do WhatsApp vai com mensagem pré-preenchida: é assim que
-       ela sabe de qual card a pessoa veio, sem depender de analytics.
+       Card em destaque: moldura dourada e plinto. É a obra da sala.
        ============================================================ -->
-  <a class="card card--principal"
+  <a class="card card--principal" data-revela
      href="https://wa.me/34643201528?text=Oi%2C%20Natiele!%20Vim%20pelo%20seu%20link%20e%20quero%20saber%20sobre%20a%20terapia%20individual."
      data-card="card-1-individual">
-    <span class="card__indice" aria-hidden="true">01</span>
+    <svg class="card__capitel" viewBox="0 0 80 32" aria-hidden="true"><use href="#capitel"></use></svg>
+    <span class="card__indice" aria-hidden="true">I</span>
     <span class="card__categoria">Terapia Individual</span>
     <span class="card__nome">Sessões online</span>
     <span class="card__beneficio">
@@ -84,10 +165,10 @@
        ============================================================ -->
   <section class="cards" aria-label="Outras formas de trabalhar comigo">
 
-    <a class="card"
+    <a class="card" data-revela
        href="https://wa.me/34643201528?text=Oi%2C%20Natiele!%20Vim%20pelo%20seu%20link%20e%20quero%20saber%20sobre%20a%20terapia%20de%20casal."
        data-card="card-2-casal">
-      <span class="card__indice" aria-hidden="true">02</span>
+      <span class="card__indice" aria-hidden="true">II</span>
       <span class="card__categoria">Terapia de Casal</span>
       <span class="card__nome">Para os dois</span>
       <span class="card__beneficio">
@@ -97,10 +178,10 @@
       <span class="card__acao">Falar no WhatsApp</span>
     </a>
 
-    <a class="card"
+    <a class="card" data-revela
        href="https://youtube.com/@nati.soardi"
        data-card="card-3-youtube">
-      <span class="card__indice" aria-hidden="true">03</span>
+      <span class="card__indice" aria-hidden="true">III</span>
       <span class="card__categoria">NATerapia</span>
       <span class="card__nome">Canal no YouTube</span>
       <span class="card__beneficio">
@@ -115,15 +196,14 @@
 
   <!-- ============================================================
        BLOCO 4 — PROVA SOCIAL
-       Deliberadamente vazio: não há depoimento nem número real ainda,
-       e inventar isso é fabricar prova. A marcação já está pronta —
-       basta preencher e descomentar.
+       Continua vazio de propósito: não há depoimento nem credencial
+       confirmada, e inventar isso é fabricar prova. A marcação está
+       pronta e estilizada — basta preencher e descomentar.
 
-  <section class="prova" aria-label="Prova social">
-    <p class="prova__numero"><strong>NÚMERO</strong> o que o número é</p>
+  <section class="prova" data-revela aria-label="Prova social">
     <figure class="depoimento">
       <blockquote>Depoimento real, curto, com autorização de quem falou.</blockquote>
-      <figcaption><span>Primeiro nome + inicial</span></figcaption>
+      <figcaption>Primeiro nome + inicial</figcaption>
     </figure>
     <ul class="credenciais">
       <li>Formação</li><li>Abordagem</li><li>Anos de clínica</li>
@@ -133,12 +213,20 @@
        ============================================================ -->
 
 
+  <div class="friso" data-revela aria-hidden="true">
+    <!-- Sem viewBox de propósito: o tile de 16px do padrão fica em
+         pixels reais e a grega nunca estica junto com a largura. -->
+    <svg width="100%" height="16"><rect width="100%" height="16" fill="url(#grega)"/></svg>
+  </div>
+
+
   <!-- ============================================================
        BLOCO 5 — CAPTURA DE LEAD
-       O ebook é o motor de e-mail: o formulário é dela, o contato fica
-       com ela. É o que sobra se o Instagram cair amanhã.
+       O ebook é o motor de e-mail: o formulário é dela, o contato
+       fica com ela. É o que sobra se o Instagram cair amanhã.
        ============================================================ -->
-  <section class="captura">
+  <section class="captura" data-revela>
+    <svg class="captura__capitel" viewBox="0 0 80 32" aria-hidden="true"><use href="#capitel"></use></svg>
     <h2>Ebook gratuito</h2>
     <p>O primeiro passo pode ser uma leitura. Baixe e comece por onde der.</p>
     <a class="botao"
@@ -152,7 +240,8 @@
   <!-- ============================================================
        BLOCO 6 — CONTATO E RODAPÉ
        ============================================================ -->
-  <footer class="rodape">
+  <footer class="rodape" data-revela>
+    <svg class="louros" viewBox="0 0 120 40" aria-hidden="true"><use href="#louros"></use></svg>
     <h2>Contato</h2>
     <p>
       <a href="https://wa.me/34643201528" data-card="contato-whatsapp">WhatsApp</a>
@@ -165,13 +254,6 @@
 </main>
 
 
-<!-- Sprite dos ícones sociais -->
-<svg hidden aria-hidden="true">
-  <symbol id="i-instagram" viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.06 1.17-.26 1.8-.42 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.07.36-2.24.41-1.27.06-1.65.07-4.86.07s-3.59-.01-4.86-.07c-1.17-.06-1.82-.26-2.24-.42-.57-.22-.96-.48-1.38-.9-.42-.42-.69-.82-.9-1.38-.16-.42-.36-1.06-.42-2.23C2.11 15.58 2.1 15.2 2.1 12s.01-3.59.07-4.86c.06-1.17.26-1.81.42-2.23.21-.57.48-.96.9-1.38.42-.42.81-.69 1.38-.9.42-.17 1.05-.36 2.22-.42C8.36 2.17 8.74 2.16 12 2.16zM12 0C8.74 0 8.33.02 7.05.07c-1.28.06-2.15.26-2.91.56-.79.31-1.46.72-2.13 1.38S.94 3.35.63 4.14c-.3.77-.5 1.64-.56 2.91C.01 8.33 0 8.74 0 12s.02 3.67.07 4.95c.06 1.28.26 2.15.56 2.91.31.79.72 1.46 1.38 2.13.67.67 1.34 1.08 2.13 1.38.77.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.02 4.95-.07c1.28-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.38.67-.67 1.08-1.34 1.38-2.13.3-.77.5-1.64.56-2.91.05-1.28.07-1.69.07-4.95s-.02-3.67-.07-4.95c-.06-1.28-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.38-2.13-.67-.67-1.34-1.08-2.13-1.38-.77-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm7.85-10.41a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/></symbol>
-  <symbol id="i-youtube" viewBox="0 0 24 24"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.87.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></symbol>
-  <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M12.53.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></symbol>
-</svg>
-
 <script>
   document.getElementById('ano').textContent = new Date().getFullYear();
 
@@ -183,6 +265,55 @@
       }
     });
   });
+
+  // ---------------------------------------------------------------
+  // Entrada em cascata conforme a pessoa desce a página.
+  //
+  // Duas regras inegociáveis:
+  // 1. Quem não tem JS, ou pediu menos movimento, vê tudo desde o
+  //    começo. A animação nunca é condição para ler.
+  // 2. Nada pode ficar invisível para sempre. O critério é "já passou
+  //    da borda de baixo da tela", e não "entrou na tela agora" —
+  //    assim quem pula um trecho (âncora, restauração de posição,
+  //    rolagem instantânea) revela o que foi pulado em vez de deixar
+  //    um buraco na página.
+  // ---------------------------------------------------------------
+  (function () {
+    var alvos = Array.prototype.slice.call(document.querySelectorAll('[data-revela]'));
+    if (!alvos.length) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    document.documentElement.classList.add('com-revelacao');
+
+    function varrer() {
+      var restantes = [];
+      var n = 0;
+      alvos.forEach(function (el) {
+        if (el.getBoundingClientRect().top < window.innerHeight * 1.05) {
+          el.style.transitionDelay = (n++ * 90) + 'ms';
+          el.classList.add('revelado');
+        } else {
+          restantes.push(el);
+        }
+      });
+      alvos = restantes;
+      if (!alvos.length) {
+        window.removeEventListener('scroll', agendar);
+        window.removeEventListener('resize', agendar);
+      }
+    }
+
+    var pendente = false;
+    function agendar() {
+      if (pendente) return;
+      pendente = true;
+      requestAnimationFrame(function () { pendente = false; varrer(); });
+    }
+
+    window.addEventListener('scroll', agendar, { passive: true });
+    window.addEventListener('resize', agendar);
+    varrer();
+  })();
 </script>
 
 </body>
