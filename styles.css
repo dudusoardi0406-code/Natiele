@@ -59,8 +59,7 @@ button:focus-visible {
 .avatar {
   width: 128px; height: 128px;
   border-radius: 50%;
-  object-fit: cover;
-  object-position: center 20%;   /* enquadra o rosto, não o tronco */
+  object-fit: cover;             /* o recorte no rosto já vem do arquivo */
   border: 1px solid var(--linha);
 }
 
