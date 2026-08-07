@@ -8,11 +8,15 @@
 <title>{{NOME}} — {{PROMESSA_CURTA}}</title>
 <meta name="description" content="{{PROMESSA}}">
 
-<!-- Open Graph: é o que aparece quando alguém manda o link no WhatsApp -->
+<!-- Sai daqui quando o conteúdo real entrar. Enquanto for placeholder,
+     a página não pode ser indexada. -->
+<meta name="robots" content="noindex">
+
+<!-- Open Graph: é o que aparece quando alguém manda o link no WhatsApp.
+     TODO(brief): criar assets/og.jpg (1200x630) e reativar. -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="{{NOME}} — {{PROMESSA_CURTA}}">
 <meta property="og:description" content="{{PROMESSA}}">
-<meta property="og:image" content="assets/og.jpg">
 <meta name="theme-color" content="#1E1916">
 
 <link rel="stylesheet" href="styles.css">
@@ -25,10 +29,10 @@
        BLOCO 1 — IDENTIDADE (acima da dobra)
        ============================================================ -->
   <header class="identidade">
-    <img class="avatar"
-         src="assets/foto.jpg"
-         alt="{{ALT: descreva a pessoa, não escreva 'foto de perfil'}}"
-         width="112" height="112">
+    <!-- TODO(brief): trocar por
+         <img class="avatar" src="assets/foto.jpg" width="112" height="112"
+              alt="{{ALT: descreva a pessoa, não escreva 'foto de perfil'}}"> -->
+    <div class="avatar avatar--vazio" aria-hidden="true">foto</div>
 
     <h1 class="nome">{{NOME}}</h1>
 
@@ -40,16 +44,12 @@
 
     <!-- Ícones sociais: resolve quem só quer seguir e ir embora.
          Cada <a> tem 44x44 de área de toque garantida no CSS. -->
+    <!-- TODO(brief): as siglas viram SVG real de cada rede. O aria-label
+         fica de qualquer jeito — ícone sem nome acessível não existe. -->
     <nav class="sociais" aria-label="Redes sociais">
-      <a href="{{URL_INSTAGRAM}}" data-card="social-instagram" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-instagram"></use></svg>
-      </a>
-      <a href="{{URL_YOUTUBE}}" data-card="social-youtube" aria-label="YouTube">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-youtube"></use></svg>
-      </a>
-      <a href="{{URL_TIKTOK}}" data-card="social-tiktok" aria-label="TikTok">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tiktok"></use></svg>
-      </a>
+      <a href="{{URL_INSTAGRAM}}" data-card="social-instagram" aria-label="Instagram">IG</a>
+      <a href="{{URL_YOUTUBE}}" data-card="social-youtube" aria-label="YouTube">YT</a>
+      <a href="{{URL_TIKTOK}}" data-card="social-tiktok" aria-label="TikTok">TT</a>
     </nav>
 
     <p class="tagline">{{TAGLINE_DISCRETA}}</p>
@@ -105,8 +105,9 @@
 
     <figure class="depoimento">
       <blockquote>{{DEPOIMENTO_CURTO}}</blockquote>
+      <!-- TODO(brief): foto de quem deu o depoimento entra aqui, com
+           loading="lazy" por estar abaixo da dobra. -->
       <figcaption>
-        <img src="assets/depoimento-1.jpg" alt="{{ALT}}" width="40" height="40" loading="lazy">
         <span>{{NOME_DE_QUEM_FALOU}}</span>
       </figcaption>
     </figure>
@@ -148,13 +149,6 @@
   </footer>
 
 </main>
-
-<!-- Sprite dos ícones. Substituir os path por SVG real de cada rede. -->
-<svg hidden aria-hidden="true">
-  <symbol id="i-instagram" viewBox="0 0 24 24"><path d="{{PATH}}"/></symbol>
-  <symbol id="i-youtube"   viewBox="0 0 24 24"><path d="{{PATH}}"/></symbol>
-  <symbol id="i-tiktok"    viewBox="0 0 24 24"><path d="{{PATH}}"/></symbol>
-</svg>
 
 <script>
   document.getElementById('ano').textContent = new Date().getFullYear();

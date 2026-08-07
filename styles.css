@@ -76,6 +76,17 @@ input:focus-visible {
   object-fit: cover;
   border: 2px solid var(--linha);
 }
+/* Estado provisório enquanto não há foto. Sai junto com o placeholder. */
+.avatar--vazio {
+  display: grid; place-items: center;
+  margin: 0 auto;
+  background: var(--surface);
+  border-style: dashed;
+  color: var(--text-muted);
+  font-size: .75rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
 
 .nome {
   font-family: var(--font-display);
@@ -98,10 +109,14 @@ input:focus-visible {
   display: grid;
   place-items: center;
   width: 44px; height: 44px;
+  border: 1px solid var(--linha);
+  border-radius: 50%;
   color: var(--text-muted);
-  transition: color .15s ease;
+  font-size: .7rem;
+  letter-spacing: .05em;
+  transition: color .15s ease, border-color .15s ease;
 }
-.sociais a:hover { color: var(--accent); }
+.sociais a:hover { color: var(--accent); border-color: var(--accent); }
 .sociais svg { width: 22px; height: 22px; fill: currentColor; }
 
 .tagline {
