@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Pedra angular do arco, o mesmo losango da página. -->
+  <rect width="64" height="64" rx="10" fill="#12100E"/>
+  <path d="M32 12 L44 32 L32 52 L20 32 Z" fill="#D9A066"/>
+  <path d="M32 22 L38 32 L32 42 L26 32 Z" fill="#12100E" opacity=".55"/>
+</svg>

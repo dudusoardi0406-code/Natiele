@@ -1,9 +1,33 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+
+  "//": [
+    "PONTE TEMPORÁRIA — remover assim que o Git for conectado no Vercel.",
+    "",
+    "Enquanto o projeto não puxa do repositório, o deploy é feito por",
+    "envio de arquivos, e binário enviado assim precisa ser transcrito",
+    "em base64 — método que já corrompeu o avatar uma vez e teria de",
+    "ser repetido a cada mudança. Aqui o CSS e as imagens são servidos",
+    "do próprio repositório pelo jsDelivr, que devolve text/css e",
+    "image/webp corretos (o raw do GitHub devolve text/plain e o",
+    "navegador recusa a folha de estilo).",
+    "",
+    "Fixado no commit e não em @main de propósito: URL de branch fica",
+    "em cache por horas no jsDelivr, e o commit é imutável.",
+    "",
+    "Isto se desfaz sozinho: o Vercel checa o filesystem antes de",
+    "aplicar rewrite, então no momento em que os arquivos reais forem",
+    "publicados pelo Git, estas regras deixam de ter efeito."
+  ],
+
   "rewrites": [
     {
+      "source": "/styles.css",
+      "destination": "https://cdn.jsdelivr.net/gh/dudusoardi0406-code/Natiele@829c56ea89a4f93e45d01eb7557e038d4230548d/styles.css"
+    },
+    {
       "source": "/assets/:arquivo",
-      "destination": "https://raw.githubusercontent.com/dudusoardi0406-code/Natiele/main/assets/:arquivo"
+      "destination": "https://cdn.jsdelivr.net/gh/dudusoardi0406-code/Natiele@829c56ea89a4f93e45d01eb7557e038d4230548d/assets/:arquivo"
     }
   ]
 }
