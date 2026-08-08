@@ -161,6 +161,87 @@ button:focus-visible {
 }
 
 /* ============================================================
+   GRÃO — ruído fino sobre a página inteira.
+   Fundo perfeitamente liso entrega que é tela. O grão devolve a
+   textura de gesso e papel que o registro clássico pede. Fica em
+   SVG inline: nenhuma requisição, nenhum arquivo.
+   ============================================================ */
+.grao {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ============================================================
+   RÓTULO DE PAREDE — separa o que se contrata do que é livre.
+   É ele que torna visível a ordem "dinheiro antes de grátis":
+   sem rótulo, a ordem existe mas ninguém percebe.
+   ============================================================ */
+.rotulo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 38px 0 18px;
+}
+.rotulo::before,
+.rotulo::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--linha), transparent);
+}
+.rotulo span {
+  font-family: var(--font-display);
+  font-size: .58rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   PLACA — o descanso entre o pago e o livre.
+   A frase é a que ela já usa na própria bio.
+   ============================================================ */
+.placa {
+  margin: 40px 0;
+  padding: 22px 20px 24px;
+  text-align: center;
+  border-top: 1px solid var(--linha);
+  border-bottom: 1px solid var(--linha);
+  background: linear-gradient(180deg, rgba(217,160,102,.055), transparent 70%);
+}
+.placa__grega {
+  display: block;
+  width: 100%; height: 16px;
+  margin-bottom: 18px;
+  opacity: .38;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 30%, #000 70%, transparent);
+          mask-image: linear-gradient(to right, transparent, #000 30%, #000 70%, transparent);
+}
+.placa blockquote {
+  margin: 0;
+  font-size: 1.34rem;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--marmore);
+}
+.placa figcaption {
+  margin-top: 16px;
+  font-family: var(--font-display);
+  font-size: .54rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: .8;
+}
+
+/* ============================================================
    BLOCO 1 — PÓRTICO
    ============================================================ */
 .portico {
@@ -218,15 +299,18 @@ button:focus-visible {
 
 /* A inscrição sob o nome, como placa de museu. */
 .epigrafe {
-  margin: 0 0 18px;
+  margin: 0 0 20px;
   font-family: var(--font-display);
-  font-size: .62rem;
+  /* Encostava nas duas bordas a 390px com .6rem/.28em. */
+  font-size: .55rem;
   font-weight: 400;
-  letter-spacing: .34em;
+  letter-spacing: .2em;
+  line-height: 1.9;
   text-transform: uppercase;
   color: var(--accent);
   opacity: .85;
 }
+.epigrafe span { opacity: .45; margin: 0 .2em; }
 
 .promessa {
   margin: 0 auto 24px;
@@ -251,27 +335,21 @@ button:focus-visible {
 .sociais a:hover { color: var(--accent); transform: translateY(-2px); }
 .sociais svg { width: 20px; height: 20px; fill: currentColor; }
 
-.tagline {
-  margin-top: 18px;
-  font-family: var(--font-display);
-  font-size: .58rem;
-  letter-spacing: .3em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  opacity: .7;
+/* Convite a descer: alto para não parecer botão, discreto para não
+   competir com os ícones sociais logo acima. */
+.cue {
+  display: block;
+  width: 1px;
+  height: 48px;
+  margin: 30px auto 0;
+  transform-origin: top;
+  background: linear-gradient(to bottom, transparent, var(--accent));
+  animation: descer 2.8s ease-in-out infinite;
 }
-
-/* ============================================================
-   FRISO — a grega. O motivo que repete e amarra a página.
-   ============================================================ */
-.friso {
-  height: 16px;
-  margin: 34px 0;
-  opacity: .5;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 22%, #000 78%, transparent);
-          mask-image: linear-gradient(to right, transparent, #000 22%, #000 78%, transparent);
+@keyframes descer {
+  0%, 100% { transform: scaleY(.5); opacity: .22; }
+  50%      { transform: scaleY(1);  opacity: .62; }
 }
-.friso svg { display: block; width: 100%; height: 16px; }
 
 /* ============================================================
    BLOCOS 2 e 3 — CARDS
@@ -317,6 +395,17 @@ button:focus-visible {
     0 20px 50px -30px rgba(217,160,102,.55);
 }
 
+/* O que é gratuito pesa menos: sem preenchimento e sem moldura
+   interna. A hierarquia precisa ser vista, não só ordenada. */
+.card--livre {
+  background: rgba(27, 23, 20, .34);
+  box-shadow: none;
+}
+.card--livre:hover {
+  background: rgba(27, 23, 20, .55);
+  box-shadow: 0 22px 44px -30px #000;
+}
+
 .card__capitel {
   position: absolute;
   top: 12px; left: 50%;
@@ -339,6 +428,9 @@ button:focus-visible {
 
 .card__categoria {
   display: block;
+  /* Zona de exclusão do numeral: sem isto o título encosta no
+     algarismo romano em telas de 320px. */
+  padding-right: 30px;
   font-family: var(--font-display);
   font-size: 1.16rem;
   font-weight: 500;

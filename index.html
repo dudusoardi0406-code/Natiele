@@ -18,7 +18,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+<!-- Cormorant 500 saiu: não era usado em lugar nenhum e vinha junto. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -78,6 +79,10 @@
   <span class="coluna coluna--dir"></span>
 </div>
 
+<!-- Grão: ruído fino por cima de tudo. Fundo liso demais entrega que
+     é tela; o grão devolve a textura de papel e gesso. -->
+<div class="grao" aria-hidden="true"></div>
+
 
 <main class="page">
 
@@ -109,7 +114,11 @@
 
     <h1 class="nome" data-revela>Natiele Soardi</h1>
 
-    <p class="epigrafe" data-revela>Psicanalista Clínica</p>
+    <!-- Um rótulo só. Antes eram dois em caixa alta a oito linhas de
+         distância, disputando a mesma função. -->
+    <p class="epigrafe" data-revela>
+      Psicanalista Clínica <span>·</span> Atendimento Online
+    </p>
 
     <p class="promessa" data-revela>
       Entenda o que se repete na sua história
@@ -128,22 +137,19 @@
       </a>
     </nav>
 
-    <p class="tagline" data-revela>Atendimento Online</p>
+    <!-- Convite a descer. Alto o bastante para não ser confundido
+         com um botão, discreto o bastante para não competir. -->
+    <span class="cue" data-revela aria-hidden="true"></span>
   </header>
 
 
-  <!-- Faixa de grega: o mesmo motivo separa todas as seções. -->
-  <div class="friso" data-revela aria-hidden="true">
-    <!-- Sem viewBox de propósito: o tile de 16px do padrão fica em
-         pixels reais e a grega nunca estica junto com a largura. -->
-    <svg width="100%" height="16"><rect width="100%" height="16" fill="url(#grega)"/></svg>
-  </div>
-
-
   <!-- ============================================================
-       BLOCO 2 — OFERTA PRINCIPAL
-       Card em destaque: moldura dourada e plinto. É a obra da sala.
+       BLOCO 2 e 3 — ATENDIMENTO (o que é pago)
+       Rótulo de parede: separa o que se contrata do que é livre, e
+       é ele que torna visível a ordem "dinheiro antes de grátis".
        ============================================================ -->
+  <div class="rotulo" data-revela><span>Atendimento</span></div>
+
   <a class="card card--principal" data-revela
      href="https://wa.me/34643201528?text=Oi%2C%20Natiele!%20Vim%20pelo%20seu%20link%20e%20quero%20saber%20sobre%20a%20terapia%20individual."
      data-card="card-1-individual">
@@ -158,40 +164,54 @@
     <span class="card__acao">Falar no WhatsApp</span>
   </a>
 
+  <a class="card" data-revela
+     href="https://wa.me/34643201528?text=Oi%2C%20Natiele!%20Vim%20pelo%20seu%20link%20e%20quero%20saber%20sobre%20a%20terapia%20de%20casal."
+     data-card="card-2-casal">
+    <span class="card__indice" aria-hidden="true">II</span>
+    <span class="card__categoria">Terapia de Casal</span>
+    <span class="card__nome">Para os dois</span>
+    <span class="card__beneficio">
+      Quando o problema não é de um nem do outro,
+      <em>mas do que acontece entre os dois.</em>
+    </span>
+    <span class="card__acao">Falar no WhatsApp</span>
+  </a>
+
 
   <!-- ============================================================
-       BLOCO 3 — OFERTAS SECUNDÁRIAS
-       Ordem: pago → gratuito.
+       O DESCANSO — placa de parede com a voz dela.
+       A frase é a que ela já usa na própria bio: é dela, não é copy
+       inventada por mim, e não promete resultado nenhum. Serve de
+       respiro entre o que é pago e o que é livre.
        ============================================================ -->
-  <section class="cards" aria-label="Outras formas de trabalhar comigo">
+  <figure class="placa" data-revela>
+    <!-- 16px é a altura do tile da grega; cortar em 10 mostraria
+         meia chave e o padrão perderia a leitura. -->
+    <svg class="placa__grega" width="100%" height="16" aria-hidden="true"><rect width="100%" height="16" fill="url(#grega)"/></svg>
+    <blockquote>Seja bem-vindo. Vamos começar sua jornada?</blockquote>
+    <figcaption>Natiele Soardi</figcaption>
+  </figure>
 
-    <a class="card" data-revela
-       href="https://wa.me/34643201528?text=Oi%2C%20Natiele!%20Vim%20pelo%20seu%20link%20e%20quero%20saber%20sobre%20a%20terapia%20de%20casal."
-       data-card="card-2-casal">
-      <span class="card__indice" aria-hidden="true">II</span>
-      <span class="card__categoria">Terapia de Casal</span>
-      <span class="card__nome">Para os dois</span>
-      <span class="card__beneficio">
-        Quando o problema não é de um nem do outro,
-        <em>mas do que acontece entre os dois.</em>
-      </span>
-      <span class="card__acao">Falar no WhatsApp</span>
-    </a>
 
-    <a class="card" data-revela
-       href="https://youtube.com/@nati.soardi"
-       data-card="card-3-youtube">
-      <span class="card__indice" aria-hidden="true">III</span>
-      <span class="card__categoria">NATerapia</span>
-      <span class="card__nome">Canal no YouTube</span>
-      <span class="card__beneficio">
-        Psicanálise em linguagem simples,
-        <em>sem precisar de dicionário.</em>
-      </span>
-      <span class="card__acao">Assistir</span>
-    </a>
+  <!-- ============================================================
+       BLOCO 3 — CONTEÚDO LIVRE (o que é gratuito)
+       Card em contorno, sem preenchimento: pesa menos que os pagos
+       de propósito. A hierarquia tem que ser visível, não só ordem.
+       ============================================================ -->
+  <div class="rotulo" data-revela><span>Conteúdo livre</span></div>
 
-  </section>
+  <a class="card card--livre" data-revela
+     href="https://youtube.com/@nati.soardi"
+     data-card="card-3-youtube">
+    <span class="card__indice" aria-hidden="true">III</span>
+    <span class="card__categoria">NATerapia</span>
+    <span class="card__nome">Canal no YouTube</span>
+    <span class="card__beneficio">
+      Psicanálise em linguagem simples,
+      <em>sem precisar de dicionário.</em>
+    </span>
+    <span class="card__acao">Assistir</span>
+  </a>
 
 
   <!-- ============================================================
@@ -213,11 +233,9 @@
        ============================================================ -->
 
 
-  <div class="friso" data-revela aria-hidden="true">
-    <!-- Sem viewBox de propósito: o tile de 16px do padrão fica em
-         pixels reais e a grega nunca estica junto com a largura. -->
-    <svg width="100%" height="16"><rect width="100%" height="16" fill="url(#grega)"/></svg>
-  </div>
+  <!-- Sem friso aqui de propósito: o ebook também é gratuito, então
+       fica sob o mesmo rótulo "Conteúdo livre" do card acima. -->
+
 
 
   <!-- ============================================================
