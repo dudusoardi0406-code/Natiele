@@ -58,7 +58,7 @@ body {
    FUNDO
    Camada 1: a luz quente vindo do fundo do corredor. É CSS puro,
    então existe sempre, mesmo sem nenhuma imagem.
-   Camada 2: assets/galeria.jpg, se houver — opcional por definição.
+   Camada 2: assets/galeria.webp, se houver — opcional por definição.
    Camada 3: véu e vinheta, que garantem o contraste do texto.
    ============================================================ */
 body::before {
@@ -69,8 +69,14 @@ body::before {
   z-index: 0;
   background-image: url("assets/galeria.webp");
   background-size: cover;
-  background-position: center 30%;
-  opacity: .26;
+  background-position: center 34%;
+  /* Era .26 e a galeria sumia. Os cards têm fundo próprio com blur,
+     então quem carrega o contraste do texto são eles — o véu global
+     não precisa apagar a imagem. */
+  opacity: .58;
+  /* Profundidade de campo: afasta o corredor para o segundo plano e
+     ainda deixa comprimir muito mais o arquivo sem aparecer. */
+  filter: blur(2px);
   animation: deriva 60s ease-in-out infinite alternate;
 }
 
@@ -81,11 +87,21 @@ body::after {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(88% 46% at 50% -6%, rgba(217,160,102,.20), transparent 62%),
-    radial-gradient(130% 80% at 50% 4%,
-      rgba(18,16,14,.20) 0%, rgba(18,16,14,.62) 56%, rgba(18,16,14,.93) 100%),
+    /* luz quente vinda do fundo do corredor */
+    radial-gradient(90% 48% at 50% -8%, rgba(217,160,102,.22), transparent 64%),
+    /* Escurece onde há texto direto sobre o fundo — topo (o nome) e
+       base (o rodapé) — e abre no miolo, onde só há card, que já
+       tem superfície própria. Antes isto virava cor sólida em 92%
+       e matava a imagem inteira. */
     linear-gradient(to bottom,
-      rgba(18,16,14,.50) 0%, rgba(18,16,14,.84) 46%, var(--bg) 92%);
+      rgba(18,16,14,.78) 0%,
+      rgba(18,16,14,.46) 30%,
+      rgba(18,16,14,.34) 62%,
+      rgba(18,16,14,.66) 90%,
+      rgba(18,16,14,.88) 100%),
+    /* vinheta de pintura a óleo: puxa o olho para o centro */
+    radial-gradient(115% 65% at 50% 42%,
+      transparent 34%, rgba(18,16,14,.58) 100%);
 }
 
 @keyframes deriva {
@@ -135,6 +151,21 @@ body::after {
   margin: 0 auto;
   padding: 40px 22px 60px;
 }
+
+/* ============================================================
+   LEGIBILIDADE SOBRE A IMAGEM
+   Estes são os únicos elementos que ficam direto sobre a galeria —
+   os cards têm superfície própria. Como o corredor varia de escuro
+   (abóbada) a claro (mármore), eles carregam a própria sombra em
+   vez de exigir que o véu global escureça a página inteira.
+   ============================================================ */
+.nome, .epigrafe, .promessa,
+.rotulo span, .placa blockquote, .placa figcaption,
+.rodape {
+  text-shadow: 0 1px 16px rgba(18,16,14,.92), 0 0 4px rgba(18,16,14,.7);
+}
+.sociais svg,
+.cue { filter: drop-shadow(0 1px 8px rgba(18,16,14,.95)); }
 
 a { color: inherit; text-decoration: none; }
 
@@ -199,9 +230,13 @@ button:focus-visible {
   font-size: .58rem;
   letter-spacing: .3em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  /* mais claro que --text-muted: este rótulo cai justo sobre o
+     mármore, a parte mais clara do corredor */
+  color: #C4B7A4;
   white-space: nowrap;
 }
+.rotulo::before,
+.rotulo::after { opacity: .8; }
 
 /* ============================================================
    PLACA — o descanso entre o pago e o livre.
@@ -398,11 +433,14 @@ button:focus-visible {
 /* O que é gratuito pesa menos: sem preenchimento e sem moldura
    interna. A hierarquia precisa ser vista, não só ordenada. */
 .card--livre {
-  background: rgba(27, 23, 20, .34);
+  /* .34 deixava o texto disputar com o mármore claro por baixo.
+     .52 ainda é bem mais leve que os .80 dos pagos, então a
+     hierarquia continua visível. */
+  background: rgba(27, 23, 20, .52);
   box-shadow: none;
 }
 .card--livre:hover {
-  background: rgba(27, 23, 20, .55);
+  background: rgba(27, 23, 20, .68);
   box-shadow: 0 22px 44px -30px #000;
 }
 
