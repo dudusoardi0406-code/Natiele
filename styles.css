@@ -11,17 +11,24 @@
    Trocar a paleta inteira = trocar as 7 linhas de cor abaixo.
    ============================================================ */
 :root {
-  --bg:          #12100E;  /* preto quente, nunca puro */
-  --surface:     #1B1714;
-  --accent:      #D9A066;  /* âmbar: luz de abajur, não de alerta */
-  --bronze:      #8E6C42;  /* ornamento: grega, capitéis, louros */
-  --marmore:     #EDE5D8;  /* mármore: títulos e citações */
-  --text:        #E4DCD0;
-  --text-muted:  #9E9280;
-  --linha:       #322A22;
+  --bg:          #24201B;  /* marrom escuro e quente, nao preto */
+  --surface:     #302923;
+  --accent:      #E0AC72;  /* âmbar: luz de abajur, não de alerta */
+  --bronze:      #A17F52;  /* ornamento: grega, capitéis, louros */
+  --marmore:     #F7F2E9;  /* mármore: títulos e citações */
+  --text:        #EFE8DC;
+  --text-muted:  #B7AA98;
+  --linha:       #4A3F34;
 
   --font-display: "Cinzel", "Times New Roman", serif;
   --font-text:    "Cormorant Garamond", Georgia, serif;
+
+  /* Os mesmos tons em componentes RGB, para uso com alfa. Sem isto,
+     clarear o fundo deixa cards e véus presos no preto antigo. */
+  --rgb-fundo:      36 32 27;
+  --rgb-superficie: 48 41 35;
+  --rgb-veu:        18 15 12;
+  --rgb-acento:     224 172 114;
 
   --raio: 2px;             /* pedra não tem canto arredondado */
   --gap:  14px;
@@ -73,7 +80,7 @@ body::before {
   /* Era .26 e a galeria sumia. Os cards têm fundo próprio com blur,
      então quem carrega o contraste do texto são eles — o véu global
      não precisa apagar a imagem. */
-  opacity: .58;
+  opacity: .64;
   /* Profundidade de campo: afasta o corredor para o segundo plano e
      ainda deixa comprimir muito mais o arquivo sem aparecer. */
   filter: blur(2px);
@@ -88,20 +95,21 @@ body::after {
   pointer-events: none;
   background:
     /* luz quente vinda do fundo do corredor */
-    radial-gradient(90% 48% at 50% -8%, rgba(217,160,102,.22), transparent 64%),
+    radial-gradient(90% 48% at 50% -8%, rgb(var(--rgb-acento) / .22), transparent 64%),
     /* Escurece onde há texto direto sobre o fundo — topo (o nome) e
        base (o rodapé) — e abre no miolo, onde só há card, que já
        tem superfície própria. Antes isto virava cor sólida em 92%
        e matava a imagem inteira. */
     linear-gradient(to bottom,
-      rgba(18,16,14,.78) 0%,
-      rgba(18,16,14,.46) 30%,
-      rgba(18,16,14,.34) 62%,
-      rgba(18,16,14,.66) 90%,
-      rgba(18,16,14,.88) 100%),
-    /* vinheta de pintura a óleo: puxa o olho para o centro */
-    radial-gradient(115% 65% at 50% 42%,
-      transparent 34%, rgba(18,16,14,.58) 100%);
+      rgb(var(--rgb-fundo) / .70) 0%,
+      rgb(var(--rgb-fundo) / .38) 30%,
+      rgb(var(--rgb-fundo) / .28) 62%,
+      rgb(var(--rgb-fundo) / .58) 90%,
+      rgb(var(--rgb-fundo) / .82) 100%),
+    /* vinheta de pintura a óleo: puxa o olho para o centro, mas mais
+       aberta que antes — a queixa era peso, e vinheta fechada pesa */
+    radial-gradient(118% 68% at 50% 42%,
+      transparent 40%, rgb(var(--rgb-fundo) / .44) 100%);
 }
 
 @keyframes deriva {
@@ -162,10 +170,10 @@ body::after {
 .nome, .epigrafe, .promessa,
 .rotulo span, .placa blockquote, .placa figcaption,
 .rodape {
-  text-shadow: 0 1px 16px rgba(18,16,14,.92), 0 0 4px rgba(18,16,14,.7);
+  text-shadow: 0 1px 16px rgb(var(--rgb-fundo) / .92), 0 0 4px rgb(var(--rgb-fundo) / .7);
 }
 .sociais svg,
-.cue { filter: drop-shadow(0 1px 8px rgba(18,16,14,.95)); }
+.cue { filter: drop-shadow(0 1px 8px rgb(var(--rgb-fundo) / .95)); }
 
 a { color: inherit; text-decoration: none; }
 
@@ -248,7 +256,7 @@ button:focus-visible {
   text-align: center;
   border-top: 1px solid var(--linha);
   border-bottom: 1px solid var(--linha);
-  background: linear-gradient(180deg, rgba(217,160,102,.055), transparent 70%);
+  background: linear-gradient(180deg, rgb(var(--rgb-acento) / .055), transparent 70%);
 }
 .placa__grega {
   display: block;
@@ -314,8 +322,8 @@ button:focus-visible {
   width: 128px; height: 128px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px solid rgba(217,160,102,.35);
-  box-shadow: 0 0 0 6px rgba(18,16,14,.75), 0 18px 40px -20px #000;
+  border: 1px solid rgb(var(--rgb-acento) / .35);
+  box-shadow: 0 0 0 6px rgb(var(--rgb-fundo) / .75), 0 18px 40px -20px #000;
 }
 
 .nome {
@@ -397,13 +405,13 @@ button:focus-visible {
   position: relative;
   padding: 26px 22px 22px;
   margin-bottom: var(--gap);
-  background: rgba(27, 23, 20, .80);
+  background: rgb(var(--rgb-superficie) / .80);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border: 1px solid var(--linha);
   border-radius: var(--raio);
   /* passe-partout: a linha interna de quem emoldura quadro */
-  box-shadow: inset 0 0 0 1px rgba(217,160,102,.08);
+  box-shadow: inset 0 0 0 1px rgb(var(--rgb-acento) / .08);
   transition: transform .3s cubic-bezier(.2,.7,.3,1),
               border-color .3s ease,
               box-shadow .3s ease;
@@ -412,22 +420,22 @@ button:focus-visible {
 
 .card:hover {
   transform: translateY(-3px);
-  border-color: rgba(217,160,102,.55);
+  border-color: rgb(var(--rgb-acento) / .55);
   box-shadow:
-    inset 0 0 0 1px rgba(217,160,102,.18),
+    inset 0 0 0 1px rgb(var(--rgb-acento) / .18),
     0 22px 44px -28px #000;
 }
 
 /* A obra da sala: moldura dourada e luz própria. */
 .card--principal {
   padding-top: 40px;
-  border-color: rgba(217,160,102,.5);
+  border-color: rgb(var(--rgb-acento) / .5);
   background:
-    linear-gradient(168deg, rgba(217,160,102,.13), transparent 58%),
-    rgba(27, 23, 20, .86);
+    linear-gradient(168deg, rgb(var(--rgb-acento) / .13), transparent 58%),
+    rgb(var(--rgb-superficie) / .86);
   box-shadow:
-    inset 0 0 0 1px rgba(217,160,102,.22),
-    0 20px 50px -30px rgba(217,160,102,.55);
+    inset 0 0 0 1px rgb(var(--rgb-acento) / .22),
+    0 20px 50px -30px rgb(var(--rgb-acento) / .55);
 }
 
 /* O que é gratuito pesa menos: sem preenchimento e sem moldura
@@ -436,11 +444,11 @@ button:focus-visible {
   /* .34 deixava o texto disputar com o mármore claro por baixo.
      .52 ainda é bem mais leve que os .80 dos pagos, então a
      hierarquia continua visível. */
-  background: rgba(27, 23, 20, .52);
+  background: rgb(var(--rgb-superficie) / .52);
   box-shadow: none;
 }
 .card--livre:hover {
-  background: rgba(27, 23, 20, .68);
+  background: rgb(var(--rgb-superficie) / .68);
   box-shadow: 0 22px 44px -30px #000;
 }
 
@@ -505,7 +513,7 @@ button:focus-visible {
   letter-spacing: .2em;
   text-transform: uppercase;
   color: var(--marmore);
-  border-bottom: 1px solid rgba(217,160,102,.6);
+  border-bottom: 1px solid rgb(var(--rgb-acento) / .6);
   padding-bottom: 4px;
   transition: border-color .3s ease;
 }
@@ -526,7 +534,7 @@ button:focus-visible {
 .depoimento {
   margin: 0;
   padding: 26px 22px;
-  background: rgba(27,23,20,.62);
+  background: rgb(var(--rgb-superficie) / .62);
   border-top: 1px solid var(--linha);
   border-bottom: 1px solid var(--linha);
 }
@@ -564,7 +572,7 @@ button:focus-visible {
   margin-top: 30px;
   padding: 44px 22px 26px;
   text-align: center;
-  background: rgba(27,23,20,.66);
+  background: rgb(var(--rgb-superficie) / .66);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border: 1px solid var(--linha);
@@ -656,7 +664,7 @@ button:focus-visible {
   left: 10px; right: 10px;
   bottom: 9px;
   height: 1px;
-  background: rgba(217,160,102,.6);
+  background: rgb(var(--rgb-acento) / .6);
   transition: background .2s ease;
 }
 .rodape a:hover { color: var(--accent); }
@@ -691,14 +699,14 @@ button:focus-visible {
   max-height: 92dvh;
   margin: auto;
   padding: 0;
-  border: 1px solid rgba(217,160,102,.32);
+  border: 1px solid rgb(var(--rgb-acento) / .32);
   border-radius: var(--raio);
-  background: rgba(20, 17, 14, .97);
+  background: rgb(var(--rgb-superficie) / .97);
   -webkit-backdrop-filter: blur(18px);
           backdrop-filter: blur(18px);
   color: var(--text);
   box-shadow:
-    inset 0 0 0 1px rgba(217,160,102,.12),
+    inset 0 0 0 1px rgb(var(--rgb-acento) / .12),
     0 40px 90px -40px #000;
   overflow: hidden;
 }
@@ -707,7 +715,7 @@ button:focus-visible {
 .triagem[open] { display: flex; flex-direction: column; }
 
 .triagem::backdrop {
-  background: rgba(10, 9, 8, .74);
+  background: rgb(var(--rgb-veu) / .74);
   -webkit-backdrop-filter: blur(3px);
           backdrop-filter: blur(3px);
 }
@@ -823,8 +831,8 @@ button:focus-visible {
 .painel .triagem__cuidado {
   margin-top: 20px;
   padding: 12px 14px;
-  border-left: 2px solid rgba(217,160,102,.5);
-  background: rgba(217,160,102,.055);
+  border-left: 2px solid rgb(var(--rgb-acento) / .5);
+  background: rgb(var(--rgb-acento) / .055);
   font-size: .92rem;
 }
 
@@ -872,7 +880,7 @@ button:focus-visible {
   padding: 10px 14px 10px 40px;
   border: 1px solid var(--linha);
   border-radius: var(--raio);
-  background: rgba(27,23,20,.5);
+  background: rgb(var(--rgb-superficie) / .5);
   font-size: 1rem;
   line-height: 1.35;
   color: var(--text);
@@ -888,7 +896,7 @@ button:focus-visible {
   width: 10px; height: 10px;
   margin-top: -5px;
   transform: rotate(45deg);
-  border: 1px solid rgba(217,160,102,.45);
+  border: 1px solid rgb(var(--rgb-acento) / .45);
   transition: background .2s ease, border-color .2s ease;
 }
 
@@ -900,10 +908,10 @@ button:focus-visible {
   color: var(--text-muted);
 }
 
-.opcao:hover span { border-color: rgba(217,160,102,.45); }
+.opcao:hover span { border-color: rgb(var(--rgb-acento) / .45); }
 .opcao input:checked + span {
-  border-color: rgba(217,160,102,.7);
-  background: rgba(217,160,102,.11);
+  border-color: rgb(var(--rgb-acento) / .7);
+  background: rgb(var(--rgb-acento) / .11);
   color: var(--marmore);
 }
 .opcao input:checked + span::before {
@@ -930,7 +938,7 @@ button:focus-visible {
   width: 100%;
   min-height: 48px;
   padding: 12px 14px;
-  background: rgba(18,16,14,.6);
+  background: rgb(var(--rgb-fundo) / .6);
   border: 1px solid var(--linha);
   border-radius: var(--raio);
   color: var(--text);
@@ -941,7 +949,7 @@ button:focus-visible {
 .campo input::placeholder,
 .campo textarea::placeholder { color: var(--text-muted); opacity: .5; }
 .campo input:focus,
-.campo textarea:focus { border-color: rgba(217,160,102,.6); outline: none; }
+.campo textarea:focus { border-color: rgb(var(--rgb-acento) / .6); outline: none; }
 .campo input:focus-visible,
 .campo textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .campo__nota {
@@ -958,9 +966,9 @@ button:focus-visible {
   max-height: 38vh;
   overflow-y: auto;
   border: 1px solid var(--linha);
-  border-left: 2px solid rgba(217,160,102,.5);
+  border-left: 2px solid rgb(var(--rgb-acento) / .5);
   border-radius: var(--raio);
-  background: rgba(18,16,14,.55);
+  background: rgb(var(--rgb-fundo) / .55);
   /* fonte do texto, não monoespaçada: é uma carta, não um log */
   font-family: var(--font-text);
   font-size: 1rem;
@@ -1012,7 +1020,7 @@ button:focus-visible {
   cursor: pointer;
   transition: color .2s ease, border-color .2s ease;
 }
-.btn-fantasma:hover { color: var(--accent); border-color: rgba(217,160,102,.5); }
+.btn-fantasma:hover { color: var(--accent); border-color: rgb(var(--rgb-acento) / .5); }
 
 /* ---------- Tela baixa: celular deitado ----------
    A 360px de altura o cabecalho comia quase um terco do painel.
@@ -1043,11 +1051,158 @@ button:focus-visible {
   }
 }
 
+/* ============================================================
+   VITRINE — coluna canelada em 3D.
+
+   Geometria de verdade: 20 lâminas dispostas em círculo no espaço,
+   com perspectiva e rotação. Não é WebGL de propósito — o Three.js
+   custaria 167KB gzipados numa página cuja função é levar ao
+   WhatsApp, e seria de longe o arquivo mais pesado do site.
+
+   O truque que dispensa iluminação dinâmica: a silhueta de um
+   cilindro em rotação não muda. Então a luz de cena é uma camada
+   fixa por cima, e só as caneluras giram por baixo.
+
+   As lâminas são OPACAS. Primeira versão usava alfa sobre o fundo
+   e a galeria aparecia através da pedra.
+   ============================================================ */
+.vitrine {
+  margin: 46px 0;
+  text-align: center;
+}
+
+/* Só aparece depois que o JS monta as lâminas: coluna pela metade
+   é pior que coluna nenhuma. */
+.vitrine__palco {
+  position: relative;
+  height: 300px;
+  perspective: 1000px;
+  perspective-origin: 50% 42%;
+  opacity: 0;
+  transition: opacity .9s ease;
+}
+.vitrine--pronta .vitrine__palco { opacity: 1; }
+
+.coluna3d {
+  --r: 30px;              /* raio do fuste */
+  --w: 11px;              /* 2*r*tan(180/20), com folga contra costura */
+  --passo: 18deg;         /* 360 / 20 */
+  --alt: 230px;           /* altura do fuste */
+  position: absolute;
+  left: 50%;
+  top: 26px;
+  width: 0; height: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(-6deg);
+}
+
+/* --- fuste --- */
+.coluna3d__fuste {
+  position: absolute;
+  left: 0; top: 0;
+  width: 0;
+  height: var(--alt);
+  transform-style: preserve-3d;
+  animation: girar 34s linear infinite;
+}
+.coluna3d__fuste i {
+  position: absolute;
+  left: calc(var(--w) / -2);
+  top: 0;
+  width: var(--w);
+  height: 100%;
+  transform: rotateY(calc(var(--i) * var(--passo))) translateZ(var(--r));
+  /* Gradiente simétrico: é a canelura, presa à superfície. Sendo
+     simétrico não sugere direção de luz, por isso pode girar. */
+  background: linear-gradient(90deg,
+    #37301F 0%, #6E6450 18%, #B3A992 42%,
+    #CFC5AE 52%, #8D8370 76%, #37301F 100%);
+}
+
+@keyframes girar { to { transform: rotateY(360deg); } }
+
+/* --- capitel dórico: equino sob ábaco --- */
+.coluna3d__capitel,
+.coluna3d__abaco,
+.coluna3d__base {
+  position: absolute;
+  border-radius: 50%;
+}
+.coluna3d__capitel {
+  left: -43px; top: -12px;
+  width: 86px; height: 20px;
+  background: linear-gradient(180deg, #CFC5AE, #6E6450);
+}
+.coluna3d__abaco {
+  left: -49px; top: -24px;
+  width: 98px; height: 18px;
+  background:
+    radial-gradient(58% 130% at 36% 24%, #E4DBC8, transparent 72%),
+    linear-gradient(180deg, #C6BCA6, #5E553F);
+  box-shadow: 0 5px 14px -7px rgb(var(--rgb-veu) / .85);
+}
+.coluna3d__base {
+  left: -40px;
+  top: calc(var(--alt) - 8px);
+  width: 80px; height: 20px;
+  background: linear-gradient(180deg, #9C927C, #463E31);
+}
+
+/* --- luz de cena: fixa, porque a silhueta não muda --- */
+.coluna3d__luz {
+  position: absolute;
+  left: calc(var(--r) * -1);
+  top: 0;
+  width: calc(var(--r) * 2);
+  height: var(--alt);
+  pointer-events: none;
+  background: linear-gradient(96deg,
+    rgb(var(--rgb-veu) / .78) 0%,
+    rgb(var(--rgb-veu) / .18) 22%,
+    rgb(255 246 230 / .18) 42%,
+    rgb(var(--rgb-veu) / .22) 68%,
+    rgb(var(--rgb-veu) / .82) 100%);
+}
+
+/* --- sombra no chão --- */
+.coluna3d__sombra {
+  position: absolute;
+  left: -62px;
+  top: calc(var(--alt) + 6px);
+  width: 124px; height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side,
+    rgb(var(--rgb-veu) / .72), transparent 76%);
+  filter: blur(4px);
+}
+
+.vitrine__legenda {
+  margin: 16px 0 0;
+  font-family: var(--font-display);
+  font-size: .56rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: .7;
+}
+.vitrine__legenda span { opacity: .5; margin: 0 .3em; }
+
+@media (max-width: 400px) {
+  .vitrine__palco { height: 262px; }
+  .coluna3d { --r: 26px; --w: 10px; --alt: 196px; }
+  .coluna3d__capitel { left: -37px; width: 74px; height: 18px; }
+  .coluna3d__abaco { left: -42px; width: 84px; height: 16px; }
+  .coluna3d__base { left: -34px; width: 68px; height: 18px; }
+  .coluna3d__sombra { left: -54px; width: 108px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     transition: none !important;
     animation: none !important;
   }
   .arco__linha { stroke-dashoffset: 0; }
+  /* a coluna para de girar, mas continua visivel num angulo bonito */
+  .coluna3d__fuste { transform: rotateY(9deg); }
   .arco__chave { opacity: .85; }
 }

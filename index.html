@@ -201,6 +201,27 @@
 
 
   <!-- ============================================================
+       VITRINE — coluna canelada em 3D.
+       20 lâminas em círculo no espaço, com perspectiva e rotação.
+       As lâminas são montadas pelo JS: coluna pela metade seria pior
+       que coluna nenhuma, então a seção só aparece quando fica pronta.
+       ============================================================ -->
+  <section class="vitrine" data-revela>
+    <div class="vitrine__palco">
+      <div class="coluna3d">
+        <div class="coluna3d__sombra"></div>
+        <div class="coluna3d__fuste" id="vitrine-fuste"></div>
+        <div class="coluna3d__luz"></div>
+        <div class="coluna3d__base"></div>
+        <div class="coluna3d__capitel"></div>
+        <div class="coluna3d__abaco"></div>
+      </div>
+    </div>
+    <p class="vitrine__legenda">Coluna canelada <span>·</span> 20 caneluras</p>
+  </section>
+
+
+  <!-- ============================================================
        BLOCO 3 — CONTEÚDO LIVRE (o que é gratuito)
        Card em contorno, sem preenchimento: pesa menos que os pagos
        de propósito. A hierarquia tem que ser visível, não só ordem.
@@ -674,6 +695,24 @@
         exclusiva.checked = false;
       }
     });
+  })();
+
+  // ---------------------------------------------------------------
+  // A coluna da vitrine: 20 lâminas dispostas em círculo no espaço.
+  // Montadas aqui e não no HTML porque são pura decoração — não
+  // devem pesar na marcação nem aparecer para leitor de tela.
+  // ---------------------------------------------------------------
+  (function () {
+    var fuste = document.getElementById('vitrine-fuste');
+    if (!fuste) return;
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < 20; i++) {
+      var lamina = document.createElement('i');
+      lamina.style.setProperty('--i', i);
+      frag.appendChild(lamina);
+    }
+    fuste.appendChild(frag);
+    fuste.closest('.vitrine').classList.add('vitrine--pronta');
   })();
 </script>
 
