@@ -597,6 +597,10 @@ button:focus-visible {
   display: block;
   min-height: 50px;
   line-height: 50px;
+  /* Centro e respiro proprios: antes o .botao herdava o text-align do
+     bloco do ebook, e dentro do dialogo o texto colava na borda. */
+  text-align: center;
+  padding: 0 18px;
   background: linear-gradient(180deg, #E0AC74, var(--accent));
   border-radius: var(--raio);
   color: #16120E;
@@ -654,6 +658,363 @@ button:focus-visible {
    Nada aqui é decorativo-opcional: sem isto a página anima para
    quem pediu explicitamente que ela não animasse.
    ============================================================ */
+/* ============================================================
+   PRIMEIRO CONTATO — o diálogo da triagem.
+
+   Reaproveita a superfície dos cards, o capitel e os numerais
+   romanos. Nenhuma linguagem visual nova: o fluxo é outra sala
+   do mesmo museu, não um formulário colado por cima.
+   ============================================================ */
+
+/* .botao é display:block e sobrepõe o [hidden] da folha do
+   navegador — sem esta guarda, botão escondido continua visível. */
+[hidden] { display: none !important; }
+
+.triagem {
+  width: min(460px, 100vw);
+  max-height: 92vh;
+  max-height: 92dvh;
+  margin: auto;
+  padding: 0;
+  border: 1px solid rgba(217,160,102,.32);
+  border-radius: var(--raio);
+  background: rgba(20, 17, 14, .97);
+  -webkit-backdrop-filter: blur(18px);
+          backdrop-filter: blur(18px);
+  color: var(--text);
+  box-shadow:
+    inset 0 0 0 1px rgba(217,160,102,.12),
+    0 40px 90px -40px #000;
+  overflow: hidden;
+}
+/* display só quando aberto: o <dialog> fechado precisa continuar
+   display:none, e uma regra base com flex quebraria isso. */
+.triagem[open] { display: flex; flex-direction: column; }
+
+.triagem::backdrop {
+  background: rgba(10, 9, 8, .74);
+  -webkit-backdrop-filter: blur(3px);
+          backdrop-filter: blur(3px);
+}
+
+/* ---------- Cabeçalho ---------- */
+.triagem__topo {
+  flex: none;
+  position: relative;
+  padding: 32px 22px 16px;
+  text-align: center;
+  border-bottom: 1px solid var(--linha);
+}
+.triagem__capitel {
+  display: block;
+  width: 64px; height: 26px;
+  margin: 0 auto 12px;
+  color: var(--bronze);
+  opacity: .7;
+}
+.triagem__topo h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: .82rem;
+  font-weight: 500;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--marmore);
+}
+.triagem__modalidade {
+  margin: 8px 0 0;
+  font-size: 1.05rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--accent);
+}
+
+/* Numerais romanos, os mesmos dos cards. */
+.triagem__passos {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+}
+.triagem__passos li {
+  position: relative;
+  padding: 0 12px;
+  font-family: var(--font-display);
+  font-size: .6rem;
+  letter-spacing: .1em;
+  color: var(--text-muted);
+  opacity: .38;
+  transition: color .3s ease, opacity .3s ease;
+}
+.triagem__passos li + li::before {
+  content: "";
+  position: absolute;
+  left: -7px; top: 50%;
+  width: 14px; height: 1px;
+  background: var(--linha);
+}
+.triagem__passos li.feito { opacity: .7; }
+.triagem__passos li.atual { color: var(--accent); opacity: 1; }
+
+.triagem__fechar {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 44px; height: 44px;
+  background: none;
+  border: 0;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color .2s ease;
+}
+.triagem__fechar:hover { color: var(--accent); }
+
+/* ---------- Corpo ---------- */
+.triagem__corpo {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 22px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.painel {
+  outline: none;
+  animation: entrar .34s cubic-bezier(.2,.7,.3,1) both;
+}
+@keyframes entrar {
+  from { opacity: 0; transform: translateX(16px); }
+}
+
+.painel h3 {
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--marmore);
+}
+.painel p {
+  margin: 0 0 14px;
+  font-size: 1.04rem;
+  color: var(--text-muted);
+}
+.painel .painel__intro { font-size: .96rem; }
+
+/* Linha de cuidado: em contexto de saúde, dizer onde procurar
+   ajuda imediata não é opcional. */
+.painel .triagem__cuidado {
+  margin-top: 20px;
+  padding: 12px 14px;
+  border-left: 2px solid rgba(217,160,102,.5);
+  background: rgba(217,160,102,.055);
+  font-size: .92rem;
+}
+
+/* ---------- Grupos e opções ---------- */
+.grupo {
+  margin: 0 0 24px;
+  padding: 0;
+  border: 0;
+}
+.grupo:last-child { margin-bottom: 0; }
+.grupo legend {
+  padding: 0;
+  margin-bottom: 14px;
+  font-size: 1.14rem;
+  font-weight: 300;
+  line-height: 1.35;
+  color: var(--marmore);
+}
+.grupo__dica {
+  margin: -8px 0 14px;
+  font-size: .88rem;
+  color: var(--text-muted);
+  opacity: .75;
+}
+
+.opcoes { display: grid; gap: 8px; }
+.opcoes--grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.opcao { position: relative; display: block; cursor: pointer; }
+
+/* O input continua no DOM e continua focável: teclado e leitor de
+   tela funcionam por herança, sem ARIA improvisada. */
+.opcao input {
+  position: absolute;
+  width: 1px; height: 1px;
+  opacity: 0;
+  margin: 0;
+}
+
+.opcao span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 10px 14px 10px 40px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  background: rgba(27,23,20,.5);
+  font-size: 1rem;
+  line-height: 1.35;
+  color: var(--text);
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+
+/* O losango é a pedra angular do arco, repetida como marca de
+   seleção — o mesmo motivo do favicon e do topo da página. */
+.opcao span::before {
+  content: "";
+  position: absolute;
+  left: 16px; top: 50%;
+  width: 10px; height: 10px;
+  margin-top: -5px;
+  transform: rotate(45deg);
+  border: 1px solid rgba(217,160,102,.45);
+  transition: background .2s ease, border-color .2s ease;
+}
+
+.opcao span em {
+  margin-left: auto;
+  padding-left: 8px;
+  font-style: italic;
+  font-size: .84rem;
+  color: var(--text-muted);
+}
+
+.opcao:hover span { border-color: rgba(217,160,102,.45); }
+.opcao input:checked + span {
+  border-color: rgba(217,160,102,.7);
+  background: rgba(217,160,102,.11);
+  color: var(--marmore);
+}
+.opcao input:checked + span::before {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.opcao input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---------- Campos de texto ---------- */
+.campo { margin-bottom: 20px; }
+.campo:last-child { margin-bottom: 0; }
+.campo label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--marmore);
+}
+.campo input,
+.campo textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  background: rgba(18,16,14,.6);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  color: var(--text);
+  font: inherit;
+  transition: border-color .2s ease;
+}
+.campo textarea { min-height: 86px; resize: vertical; }
+.campo input::placeholder,
+.campo textarea::placeholder { color: var(--text-muted); opacity: .5; }
+.campo input:focus,
+.campo textarea:focus { border-color: rgba(217,160,102,.6); outline: none; }
+.campo input:focus-visible,
+.campo textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.campo__nota {
+  margin: 8px 0 0;
+  font-size: .88rem;
+  color: var(--text-muted);
+  opacity: .75;
+}
+
+/* ---------- Resumo ---------- */
+.triagem__resumo {
+  margin: 0 0 18px;
+  padding: 18px 16px;
+  max-height: 38vh;
+  overflow-y: auto;
+  border: 1px solid var(--linha);
+  border-left: 2px solid rgba(217,160,102,.5);
+  border-radius: var(--raio);
+  background: rgba(18,16,14,.55);
+  /* fonte do texto, não monoespaçada: é uma carta, não um log */
+  font-family: var(--font-text);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--text);
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+.triagem__nota {
+  margin: 20px 0 0;
+  font-size: .86rem;
+  color: var(--text-muted);
+  opacity: .75;
+}
+
+/* ---------- Aviso de validação ---------- */
+.triagem__aviso {
+  flex: none;
+  margin: 0;
+  padding: 0 22px;
+  font-size: .92rem;
+  color: #E2A97C;
+}
+.triagem__aviso:not(:empty) { padding-top: 12px; }
+
+/* ---------- Ações ---------- */
+.triagem__acoes {
+  flex: none;
+  display: flex;
+  gap: 10px;
+  padding: 16px 22px 20px;
+  border-top: 1px solid var(--linha);
+}
+.triagem__acoes .botao--acao { flex: 1 1 auto; }
+
+.btn-fantasma {
+  flex: none;
+  min-height: 50px;
+  padding: 0 20px;
+  background: none;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: .62rem;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color .2s ease, border-color .2s ease;
+}
+.btn-fantasma:hover { color: var(--accent); border-color: rgba(217,160,102,.5); }
+
+/* ---------- Celular: folha de altura cheia ---------- */
+@media (max-width: 520px) {
+  .triagem {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    margin: 0;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     transition: none !important;

@@ -127,7 +127,7 @@
     </p>
 
     <nav class="sociais" aria-label="Redes sociais" data-revela>
-      <a href="https://instagram.com/natisoardi" data-card="social-instagram" aria-label="Instagram de Natiele Soardi" rel="me">
+      <a href="https://www.instagram.com/nati.soardi" data-card="social-instagram" aria-label="Instagram de Natiele Soardi" rel="me">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-instagram"></use></svg>
       </a>
       <a href="https://youtube.com/@nati.soardi" data-card="social-youtube" aria-label="Canal NATerapia no YouTube" rel="me">
@@ -153,7 +153,7 @@
 
   <a class="card card--principal" data-revela
      href="https://wa.me/34643201528?text=Oi%2C%20Natiele!%20Vim%20pelo%20seu%20link%20e%20quero%20saber%20sobre%20a%20terapia%20individual."
-     data-card="card-1-individual">
+     data-card="card-1-individual" data-fluxo="individual">
     <svg class="card__capitel" viewBox="0 0 80 32" aria-hidden="true"><use href="#capitel"></use></svg>
     <span class="card__indice" aria-hidden="true">I</span>
     <span class="card__categoria">Terapia Individual</span>
@@ -167,7 +167,7 @@
 
   <a class="card" data-revela
      href="https://wa.me/34643201528?text=Oi%2C%20Natiele!%20Vim%20pelo%20seu%20link%20e%20quero%20saber%20sobre%20a%20terapia%20de%20casal."
-     data-card="card-2-casal">
+     data-card="card-2-casal" data-fluxo="casal">
     <span class="card__indice" aria-hidden="true">II</span>
     <span class="card__categoria">Terapia de Casal</span>
     <span class="card__nome">Para os dois</span>
@@ -272,6 +272,166 @@
 
 </main>
 
+<!-- ================================================================
+     PRIMEIRO CONTATO — triagem guiada.
+
+     Só existe com JS. Os cards mantêm o href para o wa.me, e o clique
+     é interceptado apenas quando o <dialog> nativo está disponível —
+     então falha de script, navegador antigo ou "abrir em nova aba"
+     continuam levando ao WhatsApp como antes.
+
+     <dialog> nativo de propósito: armadilha de foco, Esc e inertização
+     do fundo vêm de graça, sem ARIA improvisada. As opções são input
+     de verdade, então teclado e leitor de tela funcionam por herança.
+
+     Nada aqui é armazenado nem enviado: as respostas vivem em memória
+     e saem só na URL que a própria pessoa dispara.
+     ================================================================ -->
+<dialog class="triagem" id="triagem" aria-labelledby="triagem-titulo">
+
+  <header class="triagem__topo">
+    <svg class="triagem__capitel" viewBox="0 0 80 32" aria-hidden="true"><use href="#capitel"></use></svg>
+    <h2 id="triagem-titulo">Primeiro contato</h2>
+    <p class="triagem__modalidade" id="triagem-modalidade"></p>
+    <ol class="triagem__passos" aria-hidden="true">
+      <li data-n="1">I</li><li data-n="2">II</li><li data-n="3">III</li><li data-n="4">IV</li>
+    </ol>
+    <button type="button" class="triagem__fechar" data-acao="fechar" aria-label="Fechar">&#215;</button>
+  </header>
+
+  <div class="triagem__corpo">
+
+    <!-- ---------- Abertura ---------- -->
+    <section class="painel" data-painel="0" tabindex="-1">
+      <h3>Antes de conversarmos</h3>
+      <p>
+        São quatro perguntas breves, cerca de um minuto. Elas servem para que a
+        Natiele já conheça o essencial quando vocês começarem a falar.
+      </p>
+      <p>
+        Nenhuma resposta é armazenada. Ao final, você recebe uma mensagem
+        pronta e decide se quer enviá-la.
+      </p>
+      <p class="triagem__cuidado">
+        Este não é um canal de urgência. Em situação de emergência, procure o
+        CVV pelo telefone 188 ou o serviço de saúde mais próximo.
+      </p>
+    </section>
+
+    <!-- ---------- I — Motivo ---------- -->
+    <section class="painel" data-painel="1" tabindex="-1">
+      <fieldset class="grupo" data-modalidade="individual" hidden>
+        <legend>O que a motiva a buscar acompanhamento neste momento?</legend>
+        <p class="grupo__dica">Pode marcar mais de uma.</p>
+        <div class="opcoes">
+          <label class="opcao"><input type="checkbox" name="motivo" value="ansiedade e preocupação persistente"><span>Ansiedade e preocupação persistente</span></label>
+          <label class="opcao"><input type="checkbox" name="motivo" value="desânimo, tristeza ou perda de interesse"><span>Desânimo, tristeza ou perda de interesse</span></label>
+          <label class="opcao"><input type="checkbox" name="motivo" value="luto ou perda significativa"><span>Luto ou perda significativa</span></label>
+          <label class="opcao"><input type="checkbox" name="motivo" value="dificuldades em relacionamentos"><span>Dificuldades em relacionamentos</span></label>
+          <label class="opcao"><input type="checkbox" name="motivo" value="questões de trabalho, estudo ou carreira"><span>Questões de trabalho, estudo ou carreira</span></label>
+          <label class="opcao"><input type="checkbox" name="motivo" value="autoconhecimento e desenvolvimento pessoal"><span>Autoconhecimento e desenvolvimento pessoal</span></label>
+          <label class="opcao"><input type="checkbox" name="motivo" value="prefiro tratar diretamente na conversa" data-exclusiva><span>Prefiro tratar diretamente na conversa</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo" data-modalidade="casal" hidden>
+        <legend>O que motiva a busca por acompanhamento neste momento?</legend>
+        <p class="grupo__dica">Pode marcar mais de uma.</p>
+        <div class="opcoes">
+          <label class="opcao"><input type="checkbox" name="motivo" value="comunicação e conflitos recorrentes"><span>Comunicação e conflitos recorrentes</span></label>
+          <label class="opcao"><input type="checkbox" name="motivo" value="rompimento de confiança"><span>Rompimento de confiança</span></label>
+          <label class="opcao"><input type="checkbox" name="motivo" value="fase de transição na relação"><span>Fase de transição na relação</span></label>
+          <label class="opcao"><input type="checkbox" name="motivo" value="intimidade e vida afetiva"><span>Intimidade e vida afetiva</span></label>
+          <label class="opcao"><input type="checkbox" name="motivo" value="dúvida sobre a continuidade da relação"><span>Dúvida sobre a continuidade da relação</span></label>
+          <label class="opcao"><input type="checkbox" name="motivo" value="prefiro tratar diretamente na conversa" data-exclusiva><span>Prefiro tratar diretamente na conversa</span></label>
+        </div>
+      </fieldset>
+    </section>
+
+    <!-- ---------- II — Experiência anterior ---------- -->
+    <section class="painel" data-painel="2" tabindex="-1">
+      <fieldset class="grupo">
+        <legend>Já realizou acompanhamento psicológico ou psicanalítico?</legend>
+        <div class="opcoes">
+          <label class="opcao"><input type="radio" name="experiencia" value="nunca realizei acompanhamento"><span>Nunca realizei</span></label>
+          <label class="opcao"><input type="radio" name="experiencia" value="já realizei anteriormente"><span>Já realizei anteriormente</span></label>
+          <label class="opcao"><input type="radio" name="experiencia" value="iniciei, mas não dei continuidade"><span>Iniciei, mas não dei continuidade</span></label>
+          <label class="opcao"><input type="radio" name="experiencia" value="estou em acompanhamento atualmente"><span>Estou em acompanhamento atualmente</span></label>
+        </div>
+      </fieldset>
+    </section>
+
+    <!-- ---------- III — Disponibilidade ---------- -->
+    <section class="painel" data-painel="3" tabindex="-1">
+      <fieldset class="grupo">
+        <legend>Em quais dias costuma ter disponibilidade?</legend>
+        <div class="opcoes opcoes--grade">
+          <label class="opcao"><input type="checkbox" name="dia" value="segunda"><span>Segunda</span></label>
+          <label class="opcao"><input type="checkbox" name="dia" value="terça"><span>Terça</span></label>
+          <label class="opcao"><input type="checkbox" name="dia" value="quarta"><span>Quarta</span></label>
+          <label class="opcao"><input type="checkbox" name="dia" value="quinta"><span>Quinta</span></label>
+          <label class="opcao"><input type="checkbox" name="dia" value="sexta"><span>Sexta</span></label>
+          <label class="opcao"><input type="checkbox" name="dia" value="sábado"><span>Sábado</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo">
+        <legend>E em quais períodos?</legend>
+        <div class="opcoes">
+          <label class="opcao"><input type="checkbox" name="faixa" value="da manhã"><span>Manhã <em>8h às 12h</em></span></label>
+          <label class="opcao"><input type="checkbox" name="faixa" value="da tarde"><span>Tarde <em>12h às 18h</em></span></label>
+          <label class="opcao"><input type="checkbox" name="faixa" value="da noite"><span>Noite <em>18h às 21h</em></span></label>
+        </div>
+      </fieldset>
+
+      <!-- O WhatsApp dela é +34. Sem a origem, "19h" tem até 4 horas de
+           ambiguidade e a disponibilidade chega inutilizável. -->
+      <div class="campo">
+        <label for="triagem-local">De onde você fala?</label>
+        <input type="text" id="triagem-local" name="local" autocomplete="address-level2"
+               placeholder="Cidade e país" maxlength="60">
+        <p class="campo__nota">Serve para acertarmos o fuso horário.</p>
+      </div>
+    </section>
+
+    <!-- ---------- IV — Identificação ---------- -->
+    <section class="painel" data-painel="4" tabindex="-1">
+      <div class="campo">
+        <label for="triagem-nome">Como gostaria de ser chamado?</label>
+        <input type="text" id="triagem-nome" name="nome" autocomplete="given-name"
+               placeholder="Primeiro nome" maxlength="40">
+      </div>
+      <div class="campo">
+        <label for="triagem-obs">Deseja adiantar mais alguma coisa?</label>
+        <textarea id="triagem-obs" name="obs" rows="3" maxlength="400"
+                  placeholder="Opcional"></textarea>
+      </div>
+    </section>
+
+    <!-- ---------- Resumo ---------- -->
+    <section class="painel" data-painel="5" tabindex="-1">
+      <h3>Sua mensagem</h3>
+      <p class="painel__intro">Confira antes de enviar. Você ainda pode voltar e ajustar.</p>
+      <pre class="triagem__resumo" id="triagem-resumo"></pre>
+      <a class="botao" id="triagem-enviar" href="#" target="_blank" rel="noopener"
+         data-card="triagem-envio">Enviar no WhatsApp</a>
+      <p class="triagem__nota">
+        Suas respostas não foram armazenadas em lugar nenhum. Elas seguem
+        apenas nesta mensagem, que parte do seu próprio WhatsApp.
+      </p>
+    </section>
+
+  </div>
+
+  <p class="triagem__aviso" id="triagem-aviso" role="status"></p>
+
+  <footer class="triagem__acoes">
+    <button type="button" class="btn-fantasma" data-acao="voltar">Voltar</button>
+    <button type="button" class="botao botao--acao" data-acao="avancar">Começar</button>
+  </footer>
+
+</dialog>
+
 
 <script>
   document.getElementById('ano').textContent = new Date().getFullYear();
@@ -332,6 +492,182 @@
     window.addEventListener('scroll', agendar, { passive: true });
     window.addEventListener('resize', agendar);
     varrer();
+  })();
+
+  // ---------------------------------------------------------------
+  // PRIMEIRO CONTATO — triagem guiada antes do WhatsApp.
+  //
+  // Privacidade: motivo de procura por atendimento é dado sensível.
+  // Nada aqui é gravado nem transmitido — sem localStorage, sem fetch.
+  // As respostas vivem em memória e saem só na URL do wa.me que a
+  // própria pessoa dispara. O GA4 recebe o número do passo, nunca o
+  // que foi respondido.
+  // ---------------------------------------------------------------
+  (function () {
+    var dlg = document.getElementById('triagem');
+    // Sem <dialog> nativo não interceptamos nada, e o href do card
+    // continua levando ao WhatsApp como sempre levou.
+    if (!dlg || typeof dlg.showModal !== 'function') return;
+
+    var MODALIDADES = { individual: 'Terapia individual', casal: 'Terapia de casal' };
+    var RESUMO = 5;
+
+    var paineis   = [].slice.call(dlg.querySelectorAll('[data-painel]'));
+    var passos    = [].slice.call(dlg.querySelectorAll('.triagem__passos li'));
+    var btVoltar  = dlg.querySelector('[data-acao="voltar"]');
+    var btAvancar = dlg.querySelector('[data-acao="avancar"]');
+    var btFechar  = dlg.querySelector('[data-acao="fechar"]');
+    var aviso     = dlg.querySelector('#triagem-aviso');
+    var resumo    = dlg.querySelector('#triagem-resumo');
+    var enviar    = dlg.querySelector('#triagem-enviar');
+    var rotulo    = dlg.querySelector('#triagem-modalidade');
+
+    var modalidade = null;
+    var passo = 0;
+
+    function marcados(nome) {
+      return [].slice.call(dlg.querySelectorAll('[name="' + nome + '"]'))
+        .filter(function (i) { return i.checked && !i.disabled; })
+        .map(function (i) { return i.value; });
+    }
+
+    function texto(nome) {
+      var el = dlg.querySelector('[name="' + nome + '"]');
+      return el ? el.value.trim().replace(/\s+/g, ' ') : '';
+    }
+
+    // "segunda, quarta e sexta" — vírgula até o penúltimo, "e" no fim.
+    function lista(itens) {
+      if (itens.length <= 1) return itens[0] || '';
+      return itens.slice(0, -1).join(', ') + ' e ' + itens[itens.length - 1];
+    }
+
+    // Só valida onde a resposta é necessária para a mensagem fazer
+    // sentido. O aviso é inline: botão morto sem explicação é pior.
+    var REGRAS = {
+      1: function () { return marcados('motivo').length ? '' : 'Escolha ao menos uma opção para seguir.'; },
+      2: function () { return marcados('experiencia').length ? '' : 'Escolha uma das opções para seguir.'; },
+      3: function () {
+        if (!marcados('dia').length) return 'Escolha ao menos um dia da semana.';
+        if (!marcados('faixa').length) return 'Escolha ao menos um período.';
+        if (!texto('local')) return 'Informe a cidade e o país, para acertarmos o fuso.';
+        return '';
+      },
+      4: function () { return texto('nome') ? '' : 'Informe como gostaria de ser chamado.'; }
+    };
+
+    function montar() {
+      var faixas = marcados('faixa');
+      var linhas = [
+        'Olá, Natiele. Vim pela sua página.',
+        '',
+        'Modalidade: ' + MODALIDADES[modalidade].toLowerCase(),
+        'Motivo da procura: ' + marcados('motivo').join('; '),
+        'Experiência anterior: ' + (marcados('experiencia')[0] || ''),
+        'Disponibilidade: ' + lista(marcados('dia')) + ' — ' +
+          (faixas.length > 1 ? 'períodos ' : 'período ') + lista(faixas),
+        'Localização: ' + texto('local'),
+        'Nome: ' + texto('nome')
+      ];
+      var obs = texto('obs');
+      if (obs) linhas.push('', 'Observação: ' + obs);
+      return linhas.join('\n');
+    }
+
+    function render() {
+      paineis.forEach(function (p) { p.hidden = Number(p.dataset.painel) !== passo; });
+      passos.forEach(function (li) {
+        var n = Number(li.dataset.n);
+        li.classList.toggle('atual', n === passo);
+        li.classList.toggle('feito', n < passo);
+      });
+      btVoltar.hidden = passo === 0;
+      btAvancar.hidden = passo === RESUMO;
+      btAvancar.textContent =
+        passo === 0 ? 'Começar' : (passo === RESUMO - 1 ? 'Revisar mensagem' : 'Continuar');
+      aviso.textContent = '';
+      if (paineis[passo]) paineis[passo].focus();
+    }
+
+    function abrir(qual) {
+      modalidade = qual;
+      passo = 0;
+
+      // Nada persiste entre aberturas.
+      [].slice.call(dlg.querySelectorAll('input, textarea')).forEach(function (i) {
+        if (i.type === 'checkbox' || i.type === 'radio') i.checked = false;
+        else i.value = '';
+      });
+
+      rotulo.textContent = MODALIDADES[qual];
+
+      // Desabilitar, e não só esconder: input desabilitado não entra
+      // em marcados(), então o conjunto da outra modalidade não vaza
+      // para a mensagem.
+      [].slice.call(dlg.querySelectorAll('[data-modalidade]')).forEach(function (g) {
+        var vale = g.dataset.modalidade === qual;
+        g.hidden = !vale;
+        [].slice.call(g.querySelectorAll('input')).forEach(function (i) { i.disabled = !vale; });
+      });
+
+      dlg.showModal();
+      render();
+    }
+
+    [].slice.call(document.querySelectorAll('[data-fluxo]')).forEach(function (card) {
+      card.addEventListener('click', function (e) {
+        // Ctrl/Cmd/Shift: a pessoa quer abrir o link em outra aba.
+        // Deixa o navegador fazer o que ela pediu.
+        if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+        e.preventDefault();
+        abrir(card.dataset.fluxo);
+      });
+    });
+
+    btAvancar.addEventListener('click', function () {
+      var regra = REGRAS[passo];
+      if (regra) {
+        var erro = regra();
+        if (erro) { aviso.textContent = erro; return; }
+      }
+      passo++;
+      if (passo === RESUMO) {
+        var msg = montar();
+        resumo.textContent = msg;
+        enviar.href = 'https://wa.me/34643201528?text=' + encodeURIComponent(msg);
+      }
+      render();
+      // Só o número do passo. Nunca o conteúdo.
+      if (typeof gtag === 'function') gtag('event', 'triagem_passo', { passo: passo });
+    });
+
+    btVoltar.addEventListener('click', function () {
+      if (passo > 0) { passo--; render(); }
+    });
+
+    btFechar.addEventListener('click', function () { dlg.close(); });
+
+    // Clique fora do painel fecha — o <dialog> em si ocupa a tela toda.
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+
+    // "Prefiro tratar diretamente" é exclusiva: é a saída para quem não
+    // quer catalogar o próprio sofrimento numa lista.
+    dlg.addEventListener('change', function (e) {
+      aviso.textContent = '';
+      if (e.target.name !== 'motivo') return;
+      var caixa = e.target.closest('.opcoes');
+      var exclusiva = caixa && caixa.querySelector('[data-exclusiva]');
+      if (!exclusiva) return;
+      if (e.target === exclusiva) {
+        if (exclusiva.checked) {
+          [].slice.call(caixa.querySelectorAll('[name="motivo"]')).forEach(function (i) {
+            if (i !== exclusiva) i.checked = false;
+          });
+        }
+      } else if (e.target.checked) {
+        exclusiva.checked = false;
+      }
+    });
   })();
 </script>
 
