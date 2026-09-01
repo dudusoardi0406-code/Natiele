@@ -23,11 +23,11 @@
   "rewrites": [
     {
       "source": "/styles.css",
-      "destination": "https://cdn.jsdelivr.net/gh/dudusoardi0406-code/Natiele@829c56ea89a4f93e45d01eb7557e038d4230548d/styles.css"
+      "destination": "https://cdn.jsdelivr.net/gh/dudusoardi0406-code/Natiele@103618271a19cfb876dc6fff98f98d81ea42a281/styles.css"
     },
     {
       "source": "/assets/:arquivo",
-      "destination": "https://cdn.jsdelivr.net/gh/dudusoardi0406-code/Natiele@829c56ea89a4f93e45d01eb7557e038d4230548d/assets/:arquivo"
+      "destination": "https://cdn.jsdelivr.net/gh/dudusoardi0406-code/Natiele@103618271a19cfb876dc6fff98f98d81ea42a281/assets/:arquivo"
     }
   ]
 }
