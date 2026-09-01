@@ -67,7 +67,7 @@ body::before {
   inset: 0;                /* nunca ultrapassa a viewport: a folga da
                               deriva vem do scale, não do tamanho */
   z-index: 0;
-  background-image: url("assets/galeria.webp");
+  background-image: url("assets/galeria.webp?v=2");
   background-size: cover;
   background-position: center 34%;
   /* Era .26 e a galeria sumia. Os cards têm fundo próprio com blur,
@@ -127,7 +127,7 @@ body::after {
     height: 76vh;
     z-index: 0;
     pointer-events: none;
-    background: url("assets/colunas.webp") no-repeat bottom center;
+    background: url("assets/colunas.webp?v=2") no-repeat bottom center;
     background-size: contain;
     opacity: .17;
     /* esfria o marfim para o âmbar da página */
@@ -640,12 +640,27 @@ button:focus-visible {
   text-transform: uppercase;
   color: var(--marmore);
 }
+/* Area de toque de verdade: era 68x23, o menor alvo da pagina inteira
+   e justamente o unico contato do rodape. O sublinhado vira
+   pseudo-elemento para continuar colado no texto enquanto o padding
+   empurra a area clicavel para 45px. */
 .rodape a {
-  border-bottom: 1px solid rgba(217,160,102,.6);
-  padding-bottom: 2px;
-  transition: border-color .2s ease, color .2s ease;
+  position: relative;
+  display: inline-block;
+  padding: 11px 10px;
+  transition: color .2s ease;
 }
-.rodape a:hover { color: var(--accent); border-color: var(--accent); }
+.rodape a::after {
+  content: "";
+  position: absolute;
+  left: 10px; right: 10px;
+  bottom: 9px;
+  height: 1px;
+  background: rgba(217,160,102,.6);
+  transition: background .2s ease;
+}
+.rodape a:hover { color: var(--accent); }
+.rodape a:hover::after { background: var(--accent); }
 .copyright {
   margin-top: 22px;
   font-size: .8rem;
@@ -998,6 +1013,19 @@ button:focus-visible {
   transition: color .2s ease, border-color .2s ease;
 }
 .btn-fantasma:hover { color: var(--accent); border-color: rgba(217,160,102,.5); }
+
+/* ---------- Tela baixa: celular deitado ----------
+   A 360px de altura o cabecalho comia quase um terco do painel.
+   O capitel e ornamento: e a primeira coisa que sai. */
+@media (max-height: 520px) {
+  .triagem__capitel { display: none; }
+  .triagem__topo { padding: 14px 22px 10px; }
+  .triagem__passos { margin-top: 10px; }
+  .triagem__corpo { padding: 16px 22px; }
+  .triagem__acoes { padding: 12px 22px 14px; }
+  .painel h3 { margin-bottom: 10px; }
+  .grupo { margin-bottom: 18px; }
+}
 
 /* ---------- Celular: folha de altura cheia ---------- */
 @media (max-width: 520px) {

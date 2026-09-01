@@ -10,18 +10,24 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Natiele Soardi — Psicanalista Clínica">
 <meta property="og:description" content="Entenda o que se repete na sua história e comece a escolher o que vem depois.">
-<meta property="og:image" content="assets/natiele-og.jpg">
+<meta property="og:image" content="assets/natiele-og.jpg?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="pt_BR">
 <meta name="theme-color" content="#12100E">
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Cormorant 500 saiu: não era usado em lugar nenhum e vinha junto. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap">
-<link rel="stylesheet" href="styles.css">
+<!-- ?v=2 quebra um cache envenenado, nao e esquema permanente.
+     Enquanto o CSS era servido pela ponte do jsDelivr, a resposta vinha
+     com max-age de um ano e immutable, e ficou grudada nos navegadores
+     que visitaram nessa janela. Trocar a URL cria outra chave de cache.
+     O Vercel serve com must-revalidate, entao daqui pra frente nao
+     precisa bumpar de novo. -->
+<link rel="stylesheet" href="styles.css?v=2">
 </head>
 <body>
 
@@ -109,7 +115,7 @@
     </svg>
 
     <img class="avatar" data-revela
-         src="assets/natiele-avatar.webp"
+         src="assets/natiele-avatar.webp?v=2"
          alt="Natiele Soardi, sorrindo, apoiada na mão, em fundo escuro"
          width="128" height="128" fetchpriority="high">
 
