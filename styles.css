@@ -221,6 +221,10 @@ button:focus-visible {
    sem rótulo, a ordem existe mas ninguém percebe.
    ============================================================ */
 .rotulo {
+  /* e um <h2>: zera o que o navegador poe por padrao, ja que quem
+     carrega a tipografia aqui e o <span> de dentro */
+  font-size: 1rem;
+  font-weight: 400;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -398,8 +402,6 @@ button:focus-visible {
    BLOCOS 2 e 3 — CARDS
    Camadas: capitel, numeral, categoria, nome, benefício, ação.
    ============================================================ */
-.cards { display: grid; gap: var(--gap); }
-
 .card {
   display: block;
   position: relative;
@@ -473,6 +475,9 @@ button:focus-visible {
 .card--principal .card__indice { top: 40px; }
 
 .card__categoria {
+  /* e um <h3> desde que as ofertas passaram a existir no indice de
+     cabecalhos; sem o reset, a margem padrao quebra o card */
+  margin: 0;
   display: block;
   /* Zona de exclusão do numeral: sem isto o título encosta no
      algarismo romano em telas de 320px. */
