@@ -1071,8 +1071,11 @@ button:focus-visible {
    As lâminas são OPACAS. Primeira versão usava alfa sobre o fundo
    e a galeria aparecia através da pedra.
    ============================================================ */
+/* Era uma peça exibida com respiro próprio (46px) e legenda. Virou
+   passagem: cola mais perto do que vem depois (a régua "Conteúdo
+   livre") do que do que vem antes (a placa, que já é o respiro). */
 .vitrine {
-  margin: 46px 0;
+  margin: 8px 0 -6px;
   text-align: center;
 }
 
@@ -1080,7 +1083,7 @@ button:focus-visible {
    é pior que coluna nenhuma. */
 .vitrine__palco {
   position: relative;
-  height: 300px;
+  height: 176px;
   perspective: 1000px;
   perspective-origin: 50% 42%;
   opacity: 0;
@@ -1088,14 +1091,19 @@ button:focus-visible {
 }
 .vitrine--pronta .vitrine__palco { opacity: 1; }
 
+/* Todas as peças abaixo (capitel, ábaco, base, luz, sombra) derivam
+   de --r e --alt por calc(). Antes cada uma tinha um pixel fixo
+   duplicado nos dois breakpoints, e as proporções podiam se perder
+   silenciosamente na próxima vez que alguém redimensionasse só um
+   dos dois. Agora só --r, --w e --alt mudam por tela. */
 .coluna3d {
-  --r: 30px;              /* raio do fuste */
-  --w: 11px;              /* 2*r*tan(180/20), com folga contra costura */
+  --r: 20px;              /* raio do fuste — era 30px na peça exibida */
+  --w: 7px;               /* 2*r*tan(180/20), com folga contra costura */
   --passo: 18deg;         /* 360 / 20 */
-  --alt: 230px;           /* altura do fuste */
+  --alt: 128px;           /* altura do fuste — era 230px */
   position: absolute;
   left: 50%;
-  top: 26px;
+  top: 18px;
   width: 0; height: 0;
   transform-style: preserve-3d;
   transform: rotateX(-6deg);
@@ -1126,7 +1134,10 @@ button:focus-visible {
 
 @keyframes girar { to { transform: rotateY(360deg); } }
 
-/* --- capitel dórico: equino sob ábaco --- */
+/* --- capitel dórico: equino sob ábaco ---
+   Larguras, alturas e offsets em calc(var(--r) * N), na mesma
+   proporção da peça original (r=30, alt=230). Um só --r por tela
+   redimensiona tudo junto; nada fica preso a um breakpoint. */
 .coluna3d__capitel,
 .coluna3d__abaco,
 .coluna3d__base {
@@ -1134,22 +1145,27 @@ button:focus-visible {
   border-radius: 50%;
 }
 .coluna3d__capitel {
-  left: -43px; top: -12px;
-  width: 86px; height: 20px;
+  left: calc(var(--r) * -1.433);
+  top: calc(var(--r) * -0.4);
+  width: calc(var(--r) * 2.867);
+  height: calc(var(--r) * 0.667);
   background: linear-gradient(180deg, #CFC5AE, #6E6450);
 }
 .coluna3d__abaco {
-  left: -49px; top: -24px;
-  width: 98px; height: 18px;
+  left: calc(var(--r) * -1.633);
+  top: calc(var(--r) * -0.8);
+  width: calc(var(--r) * 3.267);
+  height: calc(var(--r) * 0.6);
   background:
     radial-gradient(58% 130% at 36% 24%, #E4DBC8, transparent 72%),
     linear-gradient(180deg, #C6BCA6, #5E553F);
   box-shadow: 0 5px 14px -7px rgb(var(--rgb-veu) / .85);
 }
 .coluna3d__base {
-  left: -40px;
-  top: calc(var(--alt) - 8px);
-  width: 80px; height: 20px;
+  left: calc(var(--r) * -1.333);
+  top: calc(var(--alt) - var(--r) * 0.267);
+  width: calc(var(--r) * 2.667);
+  height: calc(var(--r) * 0.667);
   background: linear-gradient(180deg, #9C927C, #463E31);
 }
 
@@ -1172,33 +1188,19 @@ button:focus-visible {
 /* --- sombra no chão --- */
 .coluna3d__sombra {
   position: absolute;
-  left: -62px;
-  top: calc(var(--alt) + 6px);
-  width: 124px; height: 24px;
+  left: calc(var(--r) * -2.067);
+  top: calc(var(--alt) + var(--r) * 0.2);
+  width: calc(var(--r) * 4.133);
+  height: calc(var(--r) * 0.8);
   border-radius: 50%;
   background: radial-gradient(closest-side,
     rgb(var(--rgb-veu) / .72), transparent 76%);
   filter: blur(4px);
 }
 
-.vitrine__legenda {
-  margin: 16px 0 0;
-  font-family: var(--font-display);
-  font-size: .56rem;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  opacity: .7;
-}
-.vitrine__legenda span { opacity: .5; margin: 0 .3em; }
-
 @media (max-width: 400px) {
-  .vitrine__palco { height: 262px; }
-  .coluna3d { --r: 26px; --w: 10px; --alt: 196px; }
-  .coluna3d__capitel { left: -37px; width: 74px; height: 18px; }
-  .coluna3d__abaco { left: -42px; width: 84px; height: 16px; }
-  .coluna3d__base { left: -34px; width: 68px; height: 18px; }
-  .coluna3d__sombra { left: -54px; width: 108px; }
+  .vitrine__palco { height: 150px; }
+  .coluna3d { --r: 16px; --w: 6px; --alt: 104px; top: 16px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

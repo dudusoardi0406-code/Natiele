@@ -220,12 +220,20 @@
 
 
   <!-- ============================================================
-       VITRINE — coluna canelada em 3D.
+       VITRINE — coluna canelada em 3D, agora como passagem.
+       Antes era uma peça exibida sozinha, com uma placa que só
+       descrevia a si mesma ("coluna canelada · 20 caneluras") — não
+       dizia nada a quem lia. Virou ornamento puro: marca o ponto em
+       que a página deixa o que se paga e entra no que é livre, do
+       jeito que uma coluna de verdade marca a passagem entre duas
+       salas de um corredor. Por isso aria-hidden — não carrega mais
+       informação nenhuma, só o motivo visual.
+
        20 lâminas em círculo no espaço, com perspectiva e rotação.
-       As lâminas são montadas pelo JS: coluna pela metade seria pior
-       que coluna nenhuma, então a seção só aparece quando fica pronta.
+       Montada pelo JS: coluna pela metade seria pior que nenhuma,
+       então só aparece quando fica pronta.
        ============================================================ -->
-  <section class="vitrine" data-revela>
+  <div class="vitrine" data-revela aria-hidden="true">
     <div class="vitrine__palco">
       <div class="coluna3d">
         <div class="coluna3d__sombra"></div>
@@ -236,8 +244,7 @@
         <div class="coluna3d__abaco"></div>
       </div>
     </div>
-    <p class="vitrine__legenda">Coluna canelada <span>·</span> 20 caneluras</p>
-  </section>
+  </div>
 
 
   <!-- ============================================================
