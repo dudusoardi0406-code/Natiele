@@ -424,19 +424,20 @@ button:focus-visible {
    blueprint, que manda destacar o unico link que se quer que
    cliquem. */
 .card {
-  --arte-y: 46%;
+  --arte: url("assets/card-casal.webp");
   display: block;
   position: relative;
   padding: 20px 22px 22px;
   margin-bottom: var(--gap);
   background-image:
     linear-gradient(102deg,
-      rgb(var(--rgb-fundo) / .95) 0%,
-      rgb(var(--rgb-fundo) / .88) 42%,
-      rgb(var(--rgb-fundo) / .58) 100%),
-    url("assets/galeria.webp?v=2");
+      rgb(var(--rgb-fundo) / .94) 0%,
+      rgb(var(--rgb-fundo) / .86) 30%,
+      rgb(var(--rgb-fundo) / .52) 62%,
+      rgb(var(--rgb-fundo) / .24) 100%),
+    var(--arte);
   background-size: cover, cover;
-  background-position: 0 0, center var(--arte-y);
+  background-position: 0 0, center center;
   border: 1px solid var(--linha);
   border-radius: var(--raio);
   box-shadow: inset 0 0 0 1px rgb(var(--rgb-acento) / .07);
@@ -446,10 +447,12 @@ button:focus-visible {
 }
 .card:last-child { margin-bottom: 0; }
 
-/* Recorte diferente por card: abobada, quadro iluminado, chao de
-   marmore. Mesma imagem, tres momentos do mesmo corredor. */
-.card--principal { --arte-y: 18%; }
-.card--livre     { --arte-y: 80%; }
+/* Uma pintura por card, escolhida pelo que ela mostra e nao por
+   enfeite: a mao que desce encontrando a que sobe no atendimento
+   individual, as duas maos subindo juntas no de casal, Socrates de
+   mao erguida no card de conteudo, onde o gesto e o de ensinar. */
+.card--principal { --arte: url("assets/card-individual.webp"); }
+.card--livre     { --arte: url("assets/card-conteudo.webp"); }
 
 .card:hover {
   transform: translateY(-3px);
