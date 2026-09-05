@@ -423,11 +423,23 @@ button:focus-visible {
    borda dourada e o botao cheio. Vale registrar que isso contraria o
    blueprint, que manda destacar o unico link que se quer que
    cliquem. */
+/* ============================================================
+   CARDS COMO INGRESSO
+
+   O blueprint pedia isto desde o inicio: "1 elemento repetido em
+   TODOS os cards: ingresso + codigo de barras". Fecha com a pagina
+   ser um museu, porque o card vira o bilhete de entrada.
+
+   Os furos do picote sao buracos de verdade, feitos com mask, e nao
+   circulos coloridos por cima: o card flutua sobre a galeria, e
+   qualquer circulo solido apareceria como remendo.
+   ============================================================ */
 .card {
   --arte: url("assets/card-casal.webp");
-  display: block;
+  --canhoto: 78px;
+  --furo: 9px;
+  display: flex;
   position: relative;
-  padding: 20px 22px 22px;
   margin-bottom: var(--gap);
   background-image:
     linear-gradient(102deg,
@@ -444,13 +456,21 @@ button:focus-visible {
   transition: transform .3s cubic-bezier(.2,.7,.3,1),
               border-color .3s ease,
               box-shadow .3s ease;
+  -webkit-mask-image:
+    radial-gradient(circle var(--furo) at calc(100% - var(--canhoto)) 0, transparent var(--furo), #000 calc(var(--furo) + .5px)),
+    radial-gradient(circle var(--furo) at calc(100% - var(--canhoto)) 100%, transparent var(--furo), #000 calc(var(--furo) + .5px));
+          mask-image:
+    radial-gradient(circle var(--furo) at calc(100% - var(--canhoto)) 0, transparent var(--furo), #000 calc(var(--furo) + .5px)),
+    radial-gradient(circle var(--furo) at calc(100% - var(--canhoto)) 100%, transparent var(--furo), #000 calc(var(--furo) + .5px));
+  -webkit-mask-composite: source-in;
+          mask-composite: intersect;
 }
 .card:last-child { margin-bottom: 0; }
 
 /* Uma pintura por card, escolhida pelo que ela mostra e nao por
-   enfeite: a mao que desce encontrando a que sobe no atendimento
-   individual, as duas maos subindo juntas no de casal, Socrates de
-   mao erguida no card de conteudo, onde o gesto e o de ensinar. */
+   enfeite: a mao que desce encontrando a que sobe no individual, os
+   dois sob o mesmo pano em "A Tempestade" no de casal, Socrates de
+   mao erguida no de conteudo. */
 .card--principal { --arte: url("assets/card-individual.webp"); }
 .card--livre     { --arte: url("assets/card-conteudo.webp"); }
 
@@ -462,14 +482,41 @@ button:focus-visible {
     0 22px 44px -28px #000;
 }
 
+.card__corpo {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 20px 22px 22px;
+}
+
+/* --- o canhoto destacavel --- */
+.card__canhoto {
+  flex: 0 0 var(--canhoto);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border-left: 1px dashed rgb(var(--rgb-acento) / .38);
+  background: rgb(var(--rgb-fundo) / .5);
+}
+
+/* Codigo de barras em gradiente: nenhuma imagem, nenhuma fonte. */
+.card__barras {
+  width: 38px;
+  height: 54px;
+  opacity: .7;
+  background: repeating-linear-gradient(90deg,
+    var(--marmore) 0 2px, transparent 2px 4px,
+    var(--marmore) 4px 5px, transparent 5px 8px,
+    var(--marmore) 8px 10px, transparent 10px 13px);
+}
+
 .card__indice {
-  position: absolute;
-  top: 22px; right: 22px;
   font-family: var(--font-display);
-  font-size: .78rem;
+  font-size: .8rem;
   letter-spacing: .1em;
   color: var(--accent);
-  opacity: .5;
+  opacity: .8;
 }
 
 .card__categoria {
@@ -1296,7 +1343,17 @@ button:focus-visible {
    quando ele é só a outra coisa gratuita da página. */
 .captura {
   padding: 24px 22px 22px;
-  background: rgb(var(--rgb-superficie) / .52);
+  /* Mesma pintura de Sao Jeronimo, recortada abaixo da caveira: fica
+     o livro e o pano, sai o memento mori. O veu aqui e vertical e nao
+     diagonal, porque este bloco tem texto centralizado. */
+  background-image:
+    linear-gradient(180deg,
+      rgb(var(--rgb-fundo) / .92) 0%,
+      rgb(var(--rgb-fundo) / .84) 45%,
+      rgb(var(--rgb-fundo) / .70) 100%),
+    url("assets/card-ebook.webp");
+  background-size: cover, cover;
+  background-position: 0 0, center 62%;
   border-color: var(--linha);
 }
 .captura h3 {
@@ -1338,6 +1395,91 @@ button:focus-visible {
   }
   .arco { top: 7vh; }
 }
+
+/* ============================================================
+   BARRA FIXA
+
+   Translucida com desfoque, para nao brigar com a galeria por tras.
+   Compensada com padding no .page e com scroll-margin nas ancoras,
+   senao o salto de "Sobre mim" pousaria debaixo dela.
+   ============================================================ */
+.barra {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 14px;
+  min-height: 56px;
+  background: rgb(var(--rgb-fundo) / .82);
+  -webkit-backdrop-filter: blur(14px);
+          backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--linha);
+}
+
+.barra__nome {
+  flex: 0 1 auto;
+  min-width: 0;
+  /* flex + min-height, e nao padding: com padding a altura de toque
+     ficava em 40px, abaixo do minimo de 44 */
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 2px;
+  font-family: var(--font-display);
+  font-size: clamp(.6rem, 2.4vw, .78rem);
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--marmore);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.barra__acoes {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.barra__acoes a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: var(--raio);
+  font-family: var(--font-display);
+  font-size: clamp(.54rem, 2.1vw, .62rem);
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--text-muted);
+  transition: color .2s ease, border-color .2s ease, background .2s ease;
+}
+.barra__acoes a:hover { color: var(--marmore); }
+
+.barra__cta {
+  border-color: rgb(var(--rgb-acento) / .55);
+  color: var(--marmore);
+}
+.barra__cta:hover {
+  background: rgb(var(--rgb-acento) / .15);
+  border-color: var(--accent);
+}
+
+/* A barra cobre o topo: o conteudo desce o equivalente, e as ancoras
+   param abaixo dela em vez de sumirem por baixo. */
+.page { padding-top: calc(40px + 56px); }
+/* 84px e nao 68: a barra tem 56, mas o alvo ainda carrega o
+   translateY(16px) da revelacao no instante do salto, e a animacao o
+   puxa para cima logo depois. Sem a folga, o titulo pousava 4px
+   debaixo da barra. */
+#sobre, #atendimento, #topo { scroll-margin-top: 84px; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

@@ -114,7 +114,22 @@
 <div class="grao" aria-hidden="true"></div>
 
 
-<main class="page">
+<!-- ================================================================
+     BARRA FIXA
+     Navegacao de site, por isso fica fora do <main>. "Contato" leva
+     aos cards e nao direto ao WhatsApp de proposito: e la que a
+     triagem comeca, e um contato que passa por ela chega com contexto
+     em vez de chegar em branco.
+     ================================================================ -->
+<header class="barra">
+  <a class="barra__nome" href="#topo">Natiele Soardi</a>
+  <nav class="barra__acoes" aria-label="Atalhos">
+    <a href="#sobre">Sobre mim</a>
+    <a class="barra__cta" href="#atendimento">Contato</a>
+  </nav>
+</header>
+
+<main class="page" id="topo">
 
   <!-- ============================================================
        BLOCO 1 — PÓRTICO
@@ -183,19 +198,29 @@
   <a class="card card--principal" data-revela
      href="https://wa.me/34643201528?text=Oi%2C%20Natiele!%20Vim%20pelo%20seu%20link%20e%20quero%20saber%20sobre%20a%20terapia%20individual."
      data-card="card-1-individual" data-fluxo="individual">
-    <span class="card__indice" aria-hidden="true">I</span>
-    <h3 class="card__categoria">Terapia Individual</h3>
-    <span class="card__nome">Sessões online</span>
-    <span class="card__acao">Falar no WhatsApp</span>
+    <div class="card__corpo">
+      <h3 class="card__categoria">Terapia Individual</h3>
+      <span class="card__nome">Sessões online</span>
+      <span class="card__acao">Falar no WhatsApp</span>
+    </div>
+    <div class="card__canhoto" aria-hidden="true">
+      <span class="card__barras"></span>
+      <span class="card__indice">I</span>
+    </div>
   </a>
 
   <a class="card" data-revela
      href="https://wa.me/34643201528?text=Oi%2C%20Natiele!%20Vim%20pelo%20seu%20link%20e%20quero%20saber%20sobre%20a%20terapia%20de%20casal."
      data-card="card-2-casal" data-fluxo="casal">
-    <span class="card__indice" aria-hidden="true">II</span>
-    <h3 class="card__categoria">Terapia de Casal</h3>
-    <span class="card__nome">Para os dois</span>
-    <span class="card__acao">Falar no WhatsApp</span>
+    <div class="card__corpo">
+      <h3 class="card__categoria">Terapia de Casal</h3>
+      <span class="card__nome">Para os dois</span>
+      <span class="card__acao">Falar no WhatsApp</span>
+    </div>
+    <div class="card__canhoto" aria-hidden="true">
+      <span class="card__barras"></span>
+      <span class="card__indice">II</span>
+    </div>
   </a>
 
 
@@ -216,7 +241,7 @@
        <details> nativo: abre sem JS, funciona por teclado, e o texto
        continua no DOM — buscador indexa igual, nada foi escondido.
        ============================================================ -->
-  <h2 class="rotulo" data-revela><span>Sobre mim</span></h2>
+  <h2 class="rotulo" id="sobre" data-revela><span>Sobre mim</span></h2>
 
   <section class="sobre" data-revela>
 
@@ -316,10 +341,15 @@
   <a class="card card--livre" data-revela
      href="https://youtube.com/@nati.soardi"
      data-card="card-3-youtube">
-    <span class="card__indice" aria-hidden="true">III</span>
-    <h3 class="card__categoria">NATerapia</h3>
-    <span class="card__nome">Canal no YouTube</span>
-    <span class="card__acao">Assistir</span>
+    <div class="card__corpo">
+      <h3 class="card__categoria">NATerapia</h3>
+      <span class="card__nome">Canal no YouTube</span>
+      <span class="card__acao">Assistir</span>
+    </div>
+    <div class="card__canhoto" aria-hidden="true">
+      <span class="card__barras"></span>
+      <span class="card__indice">III</span>
+    </div>
   </a>
 
 
