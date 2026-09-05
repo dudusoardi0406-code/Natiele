@@ -462,12 +462,32 @@ button:focus-visible {
   box-shadow: 0 22px 44px -30px #000;
 }
 
-.card__capitel {
-  position: absolute;
-  top: 12px; left: 50%;
-  transform: translateX(-50%);
-  width: 72px; height: 29px;
-  color: var(--bronze);
+/* Ornamento por card, feito do losango da pedra angular: um para o
+   atendimento individual, dois para o casal, um vazado para o que e
+   gratuito. A contagem diz o que o card e, em vez de ser enfeite. */
+.card__ornamento {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.card__ornamento::before,
+.card__ornamento::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--linha), transparent);
+}
+.card__ornamento i {
+  width: 8px; height: 8px;
+  transform: rotate(45deg);
+  background: var(--accent);
+  opacity: .85;
+}
+.card__ornamento--vazado i {
+  background: none;
+  border: 1px solid var(--accent);
   opacity: .7;
 }
 
@@ -516,27 +536,46 @@ button:focus-visible {
 }
 .card__beneficio em { color: var(--accent); font-style: italic; }
 
-/* A ação diz o que acontece no clique. */
+/* A acao era um link de texto fino: o elemento mais importante do
+   card com o menor peso visual. Vira botao, e o preenchimento segue a
+   hierarquia: cheio no principal, contornado no pago secundario,
+   fantasma no gratuito. */
 .card__acao {
-  display: inline-block;
-  margin-top: 18px;
+  display: block;
+  margin-top: 20px;
+  min-height: 46px;
+  line-height: 46px;
+  text-align: center;
+  border: 1px solid rgb(var(--rgb-acento) / .5);
+  border-radius: var(--raio);
   font-family: var(--font-display);
-  font-size: .64rem;
-  font-weight: 500;
-  letter-spacing: .2em;
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .18em;
   text-transform: uppercase;
   color: var(--marmore);
-  border-bottom: 1px solid rgb(var(--rgb-acento) / .6);
-  padding-bottom: 4px;
-  transition: border-color .3s ease;
+  transition: background .25s ease, border-color .25s ease, color .25s ease;
 }
 .card__acao::after {
-  content: " \2192";
-  color: var(--accent);
+  content: " →";
   display: inline-block;
   transition: transform .3s ease;
 }
+
+.card--principal .card__acao {
+  background: linear-gradient(180deg, #E9BC8A, var(--accent));
+  border-color: transparent;
+  color: #16120E;
+  box-shadow: 0 12px 30px -18px var(--accent);
+}
+.card--livre .card__acao {
+  border-color: var(--linha);
+  color: var(--text-muted);
+}
+
 .card:hover .card__acao { border-color: var(--accent); }
+.card--principal:hover .card__acao { filter: brightness(1.06); }
+.card--livre:hover .card__acao { color: var(--marmore); }
 .card:hover .card__acao::after { transform: translateX(4px); }
 
 /* ============================================================
