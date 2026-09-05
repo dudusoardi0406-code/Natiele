@@ -1056,153 +1056,23 @@ button:focus-visible {
   }
 }
 
-/* ============================================================
-   VITRINE — coluna canelada em 3D.
-
-   Geometria de verdade: 20 lâminas dispostas em círculo no espaço,
-   com perspectiva e rotação. Não é WebGL de propósito — o Three.js
-   custaria 167KB gzipados numa página cuja função é levar ao
-   WhatsApp, e seria de longe o arquivo mais pesado do site.
-
-   O truque que dispensa iluminação dinâmica: a silhueta de um
-   cilindro em rotação não muda. Então a luz de cena é uma camada
-   fixa por cima, e só as caneluras giram por baixo.
-
-   As lâminas são OPACAS. Primeira versão usava alfa sobre o fundo
-   e a galeria aparecia através da pedra.
-   ============================================================ */
 /* Era uma peça exibida com respiro próprio (46px) e legenda. Virou
    passagem: cola mais perto do que vem depois (a régua "Conteúdo
    livre") do que do que vem antes (a placa, que já é o respiro). */
-.vitrine {
-  margin: 8px 0 -6px;
-  text-align: center;
-}
-
 /* Só aparece depois que o JS monta as lâminas: coluna pela metade
    é pior que coluna nenhuma. */
-.vitrine__palco {
-  position: relative;
-  height: 176px;
-  perspective: 1000px;
-  perspective-origin: 50% 42%;
-  opacity: 0;
-  transition: opacity .9s ease;
-}
-.vitrine--pronta .vitrine__palco { opacity: 1; }
-
 /* Todas as peças abaixo (capitel, ábaco, base, luz, sombra) derivam
    de --r e --alt por calc(). Antes cada uma tinha um pixel fixo
    duplicado nos dois breakpoints, e as proporções podiam se perder
    silenciosamente na próxima vez que alguém redimensionasse só um
    dos dois. Agora só --r, --w e --alt mudam por tela. */
-.coluna3d {
-  --r: 20px;              /* raio do fuste — era 30px na peça exibida */
-  --w: 7px;               /* 2*r*tan(180/20), com folga contra costura */
-  --passo: 18deg;         /* 360 / 20 */
-  --alt: 128px;           /* altura do fuste — era 230px */
-  position: absolute;
-  left: 50%;
-  top: 18px;
-  width: 0; height: 0;
-  transform-style: preserve-3d;
-  transform: rotateX(-6deg);
-}
-
 /* --- fuste --- */
-.coluna3d__fuste {
-  position: absolute;
-  left: 0; top: 0;
-  width: 0;
-  height: var(--alt);
-  transform-style: preserve-3d;
-  animation: girar 34s linear infinite;
-}
-.coluna3d__fuste i {
-  position: absolute;
-  left: calc(var(--w) / -2);
-  top: 0;
-  width: var(--w);
-  height: 100%;
-  transform: rotateY(calc(var(--i) * var(--passo))) translateZ(var(--r));
-  /* Gradiente simétrico: é a canelura, presa à superfície. Sendo
-     simétrico não sugere direção de luz, por isso pode girar. */
-  background: linear-gradient(90deg,
-    #37301F 0%, #6E6450 18%, #B3A992 42%,
-    #CFC5AE 52%, #8D8370 76%, #37301F 100%);
-}
-
-@keyframes girar { to { transform: rotateY(360deg); } }
-
 /* --- capitel dórico: equino sob ábaco ---
    Larguras, alturas e offsets em calc(var(--r) * N), na mesma
    proporção da peça original (r=30, alt=230). Um só --r por tela
    redimensiona tudo junto; nada fica preso a um breakpoint. */
-.coluna3d__capitel,
-.coluna3d__abaco,
-.coluna3d__base {
-  position: absolute;
-  border-radius: 50%;
-}
-.coluna3d__capitel {
-  left: calc(var(--r) * -1.433);
-  top: calc(var(--r) * -0.4);
-  width: calc(var(--r) * 2.867);
-  height: calc(var(--r) * 0.667);
-  background: linear-gradient(180deg, #CFC5AE, #6E6450);
-}
-.coluna3d__abaco {
-  left: calc(var(--r) * -1.633);
-  top: calc(var(--r) * -0.8);
-  width: calc(var(--r) * 3.267);
-  height: calc(var(--r) * 0.6);
-  background:
-    radial-gradient(58% 130% at 36% 24%, #E4DBC8, transparent 72%),
-    linear-gradient(180deg, #C6BCA6, #5E553F);
-  box-shadow: 0 5px 14px -7px rgb(var(--rgb-veu) / .85);
-}
-.coluna3d__base {
-  left: calc(var(--r) * -1.333);
-  top: calc(var(--alt) - var(--r) * 0.267);
-  width: calc(var(--r) * 2.667);
-  height: calc(var(--r) * 0.667);
-  background: linear-gradient(180deg, #9C927C, #463E31);
-}
-
 /* --- luz de cena: fixa, porque a silhueta não muda --- */
-.coluna3d__luz {
-  position: absolute;
-  left: calc(var(--r) * -1);
-  top: 0;
-  width: calc(var(--r) * 2);
-  height: var(--alt);
-  pointer-events: none;
-  background: linear-gradient(96deg,
-    rgb(var(--rgb-veu) / .78) 0%,
-    rgb(var(--rgb-veu) / .18) 22%,
-    rgb(255 246 230 / .18) 42%,
-    rgb(var(--rgb-veu) / .22) 68%,
-    rgb(var(--rgb-veu) / .82) 100%);
-}
-
 /* --- sombra no chão --- */
-.coluna3d__sombra {
-  position: absolute;
-  left: calc(var(--r) * -2.067);
-  top: calc(var(--alt) + var(--r) * 0.2);
-  width: calc(var(--r) * 4.133);
-  height: calc(var(--r) * 0.8);
-  border-radius: 50%;
-  background: radial-gradient(closest-side,
-    rgb(var(--rgb-veu) / .72), transparent 76%);
-  filter: blur(4px);
-}
-
-@media (max-width: 400px) {
-  .vitrine__palco { height: 150px; }
-  .coluna3d { --r: 16px; --w: 6px; --alt: 104px; top: 16px; }
-}
-
 /* ============================================================
    SOBRE MIM — o bloco de confiança.
    Superfície própria como a dos cards: é muito texto corrido, e
@@ -1484,7 +1354,5 @@ button:focus-visible {
     animation: none !important;
   }
   .arco__linha { stroke-dashoffset: 0; }
-  /* a coluna para de girar, mas continua visivel num angulo bonito */
-  .coluna3d__fuste { transform: rotateY(9deg); }
   .arco__chave { opacity: .85; }
 }

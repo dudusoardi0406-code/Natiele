@@ -316,34 +316,6 @@
 
 
   <!-- ============================================================
-       VITRINE — coluna canelada em 3D, agora como passagem.
-       Antes era uma peça exibida sozinha, com uma placa que só
-       descrevia a si mesma ("coluna canelada · 20 caneluras") — não
-       dizia nada a quem lia. Virou ornamento puro: marca o ponto em
-       que a página deixa o que se paga e entra no que é livre, do
-       jeito que uma coluna de verdade marca a passagem entre duas
-       salas de um corredor. Por isso aria-hidden — não carrega mais
-       informação nenhuma, só o motivo visual.
-
-       20 lâminas em círculo no espaço, com perspectiva e rotação.
-       Montada pelo JS: coluna pela metade seria pior que nenhuma,
-       então só aparece quando fica pronta.
-       ============================================================ -->
-  <div class="vitrine" data-revela aria-hidden="true">
-    <div class="vitrine__palco">
-      <div class="coluna3d">
-        <div class="coluna3d__sombra"></div>
-        <div class="coluna3d__fuste" id="vitrine-fuste"></div>
-        <div class="coluna3d__luz"></div>
-        <div class="coluna3d__base"></div>
-        <div class="coluna3d__capitel"></div>
-        <div class="coluna3d__abaco"></div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ============================================================
        BLOCO 3 — CONTEÚDO LIVRE (o que é gratuito)
        Card em contorno, sem preenchimento: pesa menos que os pagos
        de propósito. A hierarquia tem que ser visível, não só ordem.
@@ -825,23 +797,6 @@
     });
   })();
 
-  // ---------------------------------------------------------------
-  // A coluna da vitrine: 20 lâminas dispostas em círculo no espaço.
-  // Montadas aqui e não no HTML porque são pura decoração — não
-  // devem pesar na marcação nem aparecer para leitor de tela.
-  // ---------------------------------------------------------------
-  (function () {
-    var fuste = document.getElementById('vitrine-fuste');
-    if (!fuste) return;
-    var frag = document.createDocumentFragment();
-    for (var i = 0; i < 20; i++) {
-      var lamina = document.createElement('i');
-      lamina.style.setProperty('--i', i);
-      frag.appendChild(lamina);
-    }
-    fuste.appendChild(frag);
-    fuste.closest('.vitrine').classList.add('vitrine--pronta');
-  })();
 </script>
 
 </body>
