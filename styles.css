@@ -292,9 +292,12 @@ button:focus-visible {
    BLOCO 1 — PÓRTICO
    ============================================================ */
 .portico {
+  /* Largura do arco em variavel: o padding de cima deriva dela, senao
+     o arco cresce e o retrato fica alto demais dentro dele. */
+  --arco-l: clamp(260px, 22vw, 340px);
   position: relative;
   text-align: center;
-  padding-top: 26px;
+  padding-top: calc(var(--arco-l) * .1);
   margin-bottom: 30px;
 }
 
@@ -303,7 +306,8 @@ button:focus-visible {
   position: absolute;
   top: 0; left: 50%;
   transform: translateX(-50%);
-  width: 260px; height: 150px;
+  width: var(--arco-l);
+  height: calc(var(--arco-l) * .5769);   /* 150 / 260 do viewBox */
   color: var(--bronze);
   opacity: .55;
   pointer-events: none;
@@ -323,7 +327,10 @@ button:focus-visible {
 
 .avatar {
   position: relative;
-  width: 128px; height: 128px;
+  /* Era 128px fixo em qualquer tela. A origem do arquivo subiu para
+     384px justamente para cobrir os 168px de exibicao em tela 2x. */
+  width: clamp(128px, 11vw, 168px);
+  height: clamp(128px, 11vw, 168px);
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid rgb(var(--rgb-acento) / .35);
@@ -335,7 +342,7 @@ button:focus-visible {
   font-weight: 600;
   /* Cabe em 390px com o entreletras largo; se não couber, quebra em
      duas linhas sem estourar a coluna. */
-  font-size: clamp(1.4rem, 6.2vw, 1.95rem);
+  font-size: clamp(1.6rem, 4.6vw, 2.75rem);
   line-height: 1.24;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -348,8 +355,9 @@ button:focus-visible {
 .epigrafe {
   margin: 0 0 20px;
   font-family: var(--font-display);
-  /* Encostava nas duas bordas a 390px com .6rem/.28em. */
-  font-size: .55rem;
+  /* Encostava nas duas bordas a 390px com .6rem/.28em. Depois ficou
+     presa em 8,8px em qualquer largura, pequena demais ate no celular. */
+  font-size: clamp(.62rem, 1.1vw, .8rem);
   font-weight: 400;
   letter-spacing: .2em;
   line-height: 1.9;
@@ -362,7 +370,7 @@ button:focus-visible {
 .promessa {
   margin: 0 auto 24px;
   max-width: 26ch;
-  font-size: 1.28rem;
+  font-size: clamp(1.28rem, 2.1vw, 1.62rem);
   font-weight: 300;
   line-height: 1.5;
   color: var(--marmore);
@@ -1438,6 +1446,36 @@ button:focus-visible {
   letter-spacing: .07em;
   text-transform: uppercase;
   color: var(--marmore);
+}
+
+/* ============================================================
+   PRESENÇA NO DESKTOP
+
+   A página nasceu mobile-first e nada acompanhava a tela: num
+   monitor de 1920px a coluna ocupava 24% da largura e o pórtico
+   53% da dobra, o que fazia o início ler como um bloco pequeno
+   perdido no meio da imagem, e não como entrada.
+   ============================================================ */
+
+/* A coluna de leitura ganha corpo. 520px a 17px de corpo dá ~60
+   caracteres por linha, ainda dentro do confortável. */
+@media (min-width: 1040px) {
+  :root { --coluna: 520px; }
+}
+
+/* O pórtico passa a ocupar a dobra quase inteira. O arco desce junto
+   com o mesmo deslocamento do padding, senão ele se descola do
+   retrato que deveria emoldurar.
+
+   A condição de altura não é decorativa: sem ela um celular deitado
+   (740x360) receberia a mesma regra e empurraria os cards para fora
+   da tela. */
+@media (min-width: 900px) and (min-height: 640px) {
+  .portico {
+    padding-top: calc(var(--arco-l) * .1 + 7vh);
+    padding-bottom: 5vh;
+  }
+  .arco { top: 7vh; }
 }
 
 @media (prefers-reduced-motion: reduce) {
