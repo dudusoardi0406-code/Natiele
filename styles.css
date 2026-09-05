@@ -1203,6 +1203,168 @@ button:focus-visible {
   .coluna3d { --r: 16px; --w: 6px; --alt: 104px; top: 16px; }
 }
 
+/* ============================================================
+   SOBRE MIM — o bloco de confiança.
+   Superfície própria como a dos cards: é muito texto corrido, e
+   texto longo direto sobre a galeria cansa a leitura.
+   ============================================================ */
+.sobre {
+  padding: 26px 22px 22px;
+  background: rgb(var(--rgb-superficie) / .84);
+  -webkit-backdrop-filter: blur(12px);
+          backdrop-filter: blur(12px);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  box-shadow: inset 0 0 0 1px rgb(var(--rgb-acento) / .07);
+}
+
+.sobre p {
+  margin: 0 0 16px;
+  font-size: 1.04rem;
+  color: var(--text-muted);
+}
+
+/* A credencial sustenta todo o resto da página: recebe o mármore,
+   corpo maior, e o nome da formação em âmbar. */
+.sobre__abertura {
+  font-size: 1.18rem;
+  line-height: 1.5;
+  color: var(--marmore);
+}
+.sobre__abertura strong {
+  font-weight: 400;
+  color: var(--accent);
+}
+
+.sobre__titulo {
+  margin: 28px 0 14px;
+  font-family: var(--font-display);
+  font-size: .66rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* --- o tripé: três colunas, porque são três --- */
+.tripe {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+.tripe li {
+  padding: 14px 6px 12px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  background: rgb(var(--rgb-fundo) / .42);
+  font-size: .9rem;
+  line-height: 1.3;
+  color: var(--text);
+}
+.tripe li::before {
+  content: "";
+  display: block;
+  width: 8px; height: 8px;
+  margin: 0 auto 9px;
+  transform: rotate(45deg);
+  background: var(--accent);
+  opacity: .75;
+}
+
+/* --- como trabalho: losango vazado como marcador --- */
+.marcada {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.marcada li {
+  position: relative;
+  margin-bottom: 11px;
+  padding-left: 22px;
+  font-size: 1.02rem;
+  color: var(--text-muted);
+}
+.marcada li:last-child { margin-bottom: 0; }
+.marcada li::before {
+  content: "";
+  position: absolute;
+  left: 2px; top: .58em;
+  width: 7px; height: 7px;
+  transform: rotate(45deg);
+  border: 1px solid rgb(var(--rgb-acento) / .65);
+}
+
+/* --- quem atendo: etiquetas de parede, não parágrafo corrido.
+   É o trecho onde a pessoa se reconhece; precisa ler de relance. --- */
+.temas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.temas li {
+  padding: 7px 12px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  background: rgb(var(--rgb-fundo) / .45);
+  font-size: .92rem;
+  line-height: 1.25;
+  color: var(--text);
+}
+
+.sobre__nota {
+  font-size: .96rem;
+  opacity: .9;
+}
+.sobre__nota--fecho {
+  margin: 12px 0 0;
+  font-style: italic;
+  opacity: .75;
+}
+
+/* Sublinhado em pseudo-elemento e padding generoso: o link precisa
+   de 44px de altura de toque sem afastar a linha do texto. */
+.sobre__cta {
+  position: relative;
+  display: inline-block;
+  margin-top: 22px;
+  padding: 15px 2px;
+  font-family: var(--font-display);
+  font-size: .66rem;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--marmore);
+  transition: color .2s ease;
+}
+.sobre__cta::after {
+  content: "";
+  position: absolute;
+  left: 2px; right: 2px; bottom: 11px;
+  height: 1px;
+  background: rgb(var(--rgb-acento) / .6);
+  transition: background .2s ease;
+}
+.sobre__cta:hover { color: var(--accent); }
+.sobre__cta:hover::after { background: var(--accent); }
+
+/* O CTA sobe até a âncora; sem isto o salto é seco. Fica fora de
+   quem pediu menos movimento. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+@media (max-width: 360px) {
+  /* A três colunas o tripé espreme demais abaixo de 360px. */
+  .tripe { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     transition: none !important;
