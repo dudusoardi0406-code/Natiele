@@ -211,14 +211,19 @@
   <!-- ============================================================
        SOBRE MIM — o bloco de confiança.
 
-       Era o único vazio da página: nada dava motivo para acreditar
-       nela. Todo o texto aqui é dela, incluindo a credencial e a
-       lista de temas — não inventei nem embelezei nada.
+       Todo o texto aqui é dela. Fica DEPOIS dos cards pagos: quem
+       chega pelo Instagram já a conhece e quer o botão; quem precisa
+       se convencer rola e encontra.
 
-       Fica DEPOIS dos cards pagos de propósito. Quem chega pelo
-       Instagram já a conhece e quer o botão; quem precisa se
-       convencer rola e encontra. É a ordem do blueprint: prova
-       social vem depois da oferta, não antes.
+       A ordem do que fica visível responde, nessa sequência:
+       quem é ela (a credencial) → ela cuida do meu caso? (os temas)
+       → vamos falar (o link de volta). O aprofundamento vai para um
+       <details>, porque o bloco inteiro aberto era um terço da
+       página e separava a oferta paga do resto por três telas de
+       texto corrido.
+
+       <details> nativo: abre sem JS, funciona por teclado, e o texto
+       continua no DOM — buscador indexa igual, nada foi escondido.
        ============================================================ -->
   <h2 class="rotulo" data-revela><span>Sobre mim</span></h2>
 
@@ -229,41 +234,9 @@
       Instituto Fazendo a Diferença, e sigo em formação continuada.
     </p>
 
-    <p>
-      Meu trabalho parte da Psicanálise, da escuta acolhedora e sem
-      julgamentos, respeitando o tempo, a história e a singularidade de cada
-      pessoa.
-    </p>
-
-    <p>
-      Acredito que muitas das nossas dificuldades atuais podem estar
-      relacionadas a experiências, vínculos e padrões construídos ao longo da
-      nossa história. Por isso, no processo de análise, buscamos compreender
-      não apenas o que está acontecendo hoje, mas também o que pode estar por
-      trás daquilo que você sente e vive.
-    </p>
-
-    <!-- O tripé em três colunas: a psicanálise nomeia a própria formação
-         assim, então a forma repete o conteúdo. O losango é a mesma pedra
-         angular do arco, do favicon e das opções da triagem. -->
-    <h3 class="sobre__titulo">O tripé da formação</h3>
-    <ul class="tripe">
-      <li>Estudo teórico</li>
-      <li>Análise pessoal</li>
-      <li>Supervisão</li>
-    </ul>
-
-    <h3 class="sobre__titulo">Como trabalho</h3>
-    <ul class="marcada">
-      <li>Base psicanalítica</li>
-      <li>Escuta acolhedora e sem julgamentos</li>
-      <li>Respeito ao tempo e à história de cada pessoa</li>
-      <li>Abordagens e ferramentas específicas para o trabalho com casais</li>
-    </ul>
-
     <!-- A lista de temas é provavelmente o trecho que mais converte da
-         página inteira: é onde a pessoa se reconhece. Por isso vira grade
-         de etiquetas, que se lê de relance, e não parágrafo corrido. -->
+         página inteira: é onde a pessoa se reconhece. Por isso vem cedo,
+         em grade de etiquetas que se lê de relance. -->
     <h3 class="sobre__titulo">Quem atendo</h3>
     <p class="sobre__nota">
       Adultos e casais, de forma 100% online, em questões relacionadas a:
@@ -284,27 +257,62 @@
     </ul>
     <p class="sobre__nota sobre__nota--fecho">e outras questões emocionais.</p>
 
+    <details class="sobre__mais">
+      <summary>Como eu trabalho</summary>
+
+      <div class="sobre__mais__corpo">
+        <p>
+          Meu trabalho parte da Psicanálise, da escuta acolhedora e sem
+          julgamentos, respeitando o tempo, a história e a singularidade de
+          cada pessoa.
+        </p>
+
+        <p>
+          Acredito que muitas das nossas dificuldades atuais podem estar
+          relacionadas a experiências, vínculos e padrões construídos ao longo
+          da nossa história. Por isso, no processo de análise, buscamos
+          compreender não apenas o que está acontecendo hoje, mas também o que
+          pode estar por trás daquilo que você sente e vive.
+        </p>
+
+        <!-- O tripé em três colunas: a psicanálise nomeia a própria formação
+             assim, então a forma repete o conteúdo. O losango é a mesma pedra
+             angular do arco, do favicon e das opções da triagem. -->
+        <h3 class="sobre__titulo">O tripé da formação</h3>
+        <ul class="tripe">
+          <li>Estudo teórico</li>
+          <li>Análise pessoal</li>
+          <li>Supervisão</li>
+        </ul>
+
+        <h3 class="sobre__titulo">Na prática</h3>
+        <ul class="marcada">
+          <li>Base psicanalítica</li>
+          <li>Escuta acolhedora e sem julgamentos</li>
+          <li>Respeito ao tempo e à história de cada pessoa</li>
+          <li>Abordagens e ferramentas específicas para o trabalho com casais</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- A citação era um bloco solto logo abaixo desta seção, e ficava
+         colada na coluna 3D: duas pausas ornamentais seguidas fazendo o
+         mesmo trabalho. É a voz dela, então pertence à história dela.
+         Reaproveita a grega e o estilo da placa que já existiam. -->
+    <figure class="placa placa--fecho">
+      <!-- 16px é a altura do tile da grega; cortar em 10 mostraria
+           meia chave e o padrão perderia a leitura. -->
+      <svg class="placa__grega" width="100%" height="16" aria-hidden="true"><rect width="100%" height="16" fill="url(#grega)"/></svg>
+      <blockquote>Dar o primeiro passo pode ser o começo de uma nova forma de olhar para a sua própria história.</blockquote>
+      <figcaption>Natiele Soardi</figcaption>
+    </figure>
+
     <!-- Quem leu até aqui estava buscando motivo para confiar, e agora
          teria que rolar de volta para achar o botão. Este link resolve
          essa fricção sem repetir um terceiro CTA de WhatsApp. -->
     <a class="sobre__cta" href="#atendimento">Vamos conversar?</a>
 
   </section>
-
-
-  <!-- ============================================================
-       O DESCANSO — placa de parede com a voz dela.
-       A frase é a que ela já usa na própria bio: é dela, não é copy
-       inventada por mim, e não promete resultado nenhum. Serve de
-       respiro entre o que é pago e o que é livre.
-       ============================================================ -->
-  <figure class="placa" data-revela>
-    <!-- 16px é a altura do tile da grega; cortar em 10 mostraria
-         meia chave e o padrão perderia a leitura. -->
-    <svg class="placa__grega" width="100%" height="16" aria-hidden="true"><rect width="100%" height="16" fill="url(#grega)"/></svg>
-    <blockquote>Dar o primeiro passo pode ser o começo de uma nova forma de olhar para a sua própria história.</blockquote>
-    <figcaption>Natiele Soardi</figcaption>
-  </figure>
 
 
   <!-- ============================================================
@@ -384,10 +392,16 @@
        BLOCO 5 — CAPTURA DE LEAD
        O ebook é o motor de e-mail: o formulário é dela, o contato
        fica com ela. É o que sobra se o Instagram cair amanhã.
+
+       É h3, não h2: também é gratuito, então pertence ao "Conteúdo
+       livre" acima. Como h2 ele virava irmão daquele rótulo no índice
+       de cabeçalhos, anunciando uma seção nova que não existe. O
+       capitel saiu pelo mesmo motivo — era ele que criava a falsa
+       quebra visual. O botão dourado fica: o destaque é da ação, não
+       do enquadramento.
        ============================================================ -->
   <section class="captura" data-revela>
-    <svg class="captura__capitel" viewBox="0 0 80 32" aria-hidden="true"><use href="#capitel"></use></svg>
-    <h2>Ebook gratuito</h2>
+    <h3>Ebook gratuito</h3>
     <p>O primeiro passo pode ser uma leitura. Baixe e comece por onde der.</p>
     <a class="botao"
        href="https://docs.google.com/forms/d/e/1FAIpQLSeng9vDHbaFd0kQXUiOUQ6dayDhYp6i_NZf8ybJsOnSvbLvDA/viewform"

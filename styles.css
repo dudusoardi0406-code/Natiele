@@ -583,15 +583,7 @@ button:focus-visible {
   border: 1px solid var(--linha);
   border-radius: var(--raio);
 }
-.captura__capitel {
-  position: absolute;
-  top: 12px; left: 50%;
-  transform: translateX(-50%);
-  width: 72px; height: 29px;
-  color: var(--bronze);
-  opacity: .6;
-}
-.captura h2 {
+.captura h3 {
   margin: 0 0 10px;
   font-family: var(--font-display);
   font-size: 1.1rem;
@@ -1363,6 +1355,89 @@ button:focus-visible {
 @media (max-width: 360px) {
   /* A três colunas o tripé espreme demais abaixo de 360px. */
   .tripe { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ============================================================
+   "COMO EU TRABALHO" — o aprofundamento colapsável.
+
+   <details> nativo: abre sem JS, funciona por teclado, e o conteúdo
+   fica no DOM mesmo fechado — buscador indexa igual. Aberto, o bloco
+   "Sobre mim" era um terço da página inteira e separava a oferta
+   paga do resto por três telas de texto corrido.
+   ============================================================ */
+.sobre__mais {
+  margin-top: 26px;
+  border-top: 1px solid var(--linha);
+}
+
+/* O triângulo padrão do navegador sai e entra o losango da pedra
+   angular, o mesmo marcador do resto da página. */
+.sobre__mais summary {
+  position: relative;
+  list-style: none;
+  padding: 17px 0 17px 24px;   /* 44px de altura de toque */
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: .66rem;
+  font-weight: 500;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  transition: color .2s ease;
+}
+.sobre__mais summary::-webkit-details-marker { display: none; }
+.sobre__mais summary::before {
+  content: "";
+  position: absolute;
+  left: 3px; top: 50%;
+  width: 8px; height: 8px;
+  margin-top: -4px;
+  border: 1px solid currentColor;
+  transform: rotate(45deg);
+  transition: background .2s ease, transform .3s ease;
+}
+.sobre__mais[open] summary::before {
+  background: currentColor;
+  transform: rotate(135deg);
+}
+.sobre__mais summary:hover { color: var(--marmore); }
+.sobre__mais summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.sobre__mais__corpo { padding-bottom: 6px; }
+/* O primeiro título de dentro não precisa do respiro de cima: o
+   próprio summary já separa. */
+.sobre__mais__corpo > :first-child { margin-top: 0; }
+
+/* --- a citação como fecho da seção, não como bloco solto --- */
+.placa--fecho {
+  margin: 28px 0 0;
+  padding: 22px 4px 0;
+  border-top: 1px solid var(--linha);
+  border-bottom: 0;
+  background: none;
+}
+.placa--fecho blockquote { font-size: 1.2rem; }
+
+/* --- o ebook entra na família do conteúdo livre ---
+   Mesma superfície e mesma borda do .card--livre. Antes tinha
+   tratamento próprio e capitel, o que o anunciava como seção nova
+   quando ele é só a outra coisa gratuita da página. */
+.captura {
+  padding: 24px 22px 22px;
+  background: rgb(var(--rgb-superficie) / .52);
+  border-color: var(--linha);
+}
+.captura h3 {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-size: 1.16rem;
+  font-weight: 500;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--marmore);
 }
 
 @media (prefers-reduced-motion: reduce) {
