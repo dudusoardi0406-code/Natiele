@@ -410,23 +410,46 @@ button:focus-visible {
    BLOCOS 2 e 3 — CARDS
    Camadas: capitel, numeral, categoria, nome, benefício, ação.
    ============================================================ */
+/* Arte de fundo em cada card, na linha do site de referencia. O
+   arquivo e a mesma galeria.webp que ja carrega para o fundo da
+   pagina: muda so o recorte por card, entao custa zero byte e zero
+   requisicao a mais.
+
+   O veu e diagonal de proposito: escuro onde o texto vive, aberto do
+   lado direito, onde a imagem aparece. Sem ele o marmore claro do
+   corredor comeria as letras.
+
+   Todos os cards com o mesmo peso, a pedido: o principal perdeu a
+   borda dourada e o botao cheio. Vale registrar que isso contraria o
+   blueprint, que manda destacar o unico link que se quer que
+   cliquem. */
 .card {
+  --arte-y: 46%;
   display: block;
   position: relative;
-  padding: 26px 22px 22px;
+  padding: 20px 22px 22px;
   margin-bottom: var(--gap);
-  background: rgb(var(--rgb-superficie) / .80);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  background-image:
+    linear-gradient(102deg,
+      rgb(var(--rgb-fundo) / .95) 0%,
+      rgb(var(--rgb-fundo) / .88) 42%,
+      rgb(var(--rgb-fundo) / .58) 100%),
+    url("assets/galeria.webp?v=2");
+  background-size: cover, cover;
+  background-position: 0 0, center var(--arte-y);
   border: 1px solid var(--linha);
   border-radius: var(--raio);
-  /* passe-partout: a linha interna de quem emoldura quadro */
-  box-shadow: inset 0 0 0 1px rgb(var(--rgb-acento) / .08);
+  box-shadow: inset 0 0 0 1px rgb(var(--rgb-acento) / .07);
   transition: transform .3s cubic-bezier(.2,.7,.3,1),
               border-color .3s ease,
               box-shadow .3s ease;
 }
 .card:last-child { margin-bottom: 0; }
+
+/* Recorte diferente por card: abobada, quadro iluminado, chao de
+   marmore. Mesma imagem, tres momentos do mesmo corredor. */
+.card--principal { --arte-y: 18%; }
+.card--livre     { --arte-y: 80%; }
 
 .card:hover {
   transform: translateY(-3px);
@@ -434,61 +457,6 @@ button:focus-visible {
   box-shadow:
     inset 0 0 0 1px rgb(var(--rgb-acento) / .18),
     0 22px 44px -28px #000;
-}
-
-/* A obra da sala: moldura dourada e luz própria. */
-.card--principal {
-  padding-top: 40px;
-  border-color: rgb(var(--rgb-acento) / .5);
-  background:
-    linear-gradient(168deg, rgb(var(--rgb-acento) / .13), transparent 58%),
-    rgb(var(--rgb-superficie) / .86);
-  box-shadow:
-    inset 0 0 0 1px rgb(var(--rgb-acento) / .22),
-    0 20px 50px -30px rgb(var(--rgb-acento) / .55);
-}
-
-/* O que é gratuito pesa menos: sem preenchimento e sem moldura
-   interna. A hierarquia precisa ser vista, não só ordenada. */
-.card--livre {
-  /* .34 deixava o texto disputar com o mármore claro por baixo.
-     .52 ainda é bem mais leve que os .80 dos pagos, então a
-     hierarquia continua visível. */
-  background: rgb(var(--rgb-superficie) / .52);
-  box-shadow: none;
-}
-.card--livre:hover {
-  background: rgb(var(--rgb-superficie) / .68);
-  box-shadow: 0 22px 44px -30px #000;
-}
-
-/* Ornamento por card, feito do losango da pedra angular: um para o
-   atendimento individual, dois para o casal, um vazado para o que e
-   gratuito. A contagem diz o que o card e, em vez de ser enfeite. */
-.card__ornamento {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 18px;
-}
-.card__ornamento::before,
-.card__ornamento::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--linha), transparent);
-}
-.card__ornamento i {
-  width: 8px; height: 8px;
-  transform: rotate(45deg);
-  background: var(--accent);
-  opacity: .85;
-}
-.card__ornamento--vazado i {
-  background: none;
-  border: 1px solid var(--accent);
-  opacity: .7;
 }
 
 .card__indice {
@@ -500,7 +468,6 @@ button:focus-visible {
   color: var(--accent);
   opacity: .5;
 }
-.card--principal .card__indice { top: 40px; }
 
 .card__categoria {
   /* e um <h3> desde que as ofertas passaram a existir no indice de
@@ -528,54 +495,36 @@ button:focus-visible {
   color: var(--accent);
 }
 
-.card__beneficio {
-  display: block;
-  margin-top: 12px;
-  font-size: 1.05rem;
-  color: var(--text-muted);
-}
-.card__beneficio em { color: var(--accent); font-style: italic; }
 
-/* A acao era um link de texto fino: o elemento mais importante do
-   card com o menor peso visual. Vira botao, e o preenchimento segue a
-   hierarquia: cheio no principal, contornado no pago secundario,
-   fantasma no gratuito. */
+/* Botao contornado, igual nos tres cards. Nao ocupa a largura
+   inteira: num card de 2,7:1 um botao cheio comeria metade da altura
+   e ainda taparia a arte de fundo do lado direito. */
 .card__acao {
-  display: block;
-  margin-top: 20px;
-  min-height: 46px;
-  line-height: 46px;
-  text-align: center;
-  border: 1px solid rgb(var(--rgb-acento) / .5);
+  display: inline-block;
+  margin-top: 18px;
+  min-height: 44px;
+  line-height: 42px;
+  padding: 0 20px;
+  border: 1px solid rgb(var(--rgb-acento) / .55);
   border-radius: var(--raio);
+  background: rgb(var(--rgb-fundo) / .5);
   font-family: var(--font-display);
   font-size: .62rem;
   font-weight: 600;
-  letter-spacing: .18em;
+  letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--marmore);
-  transition: background .25s ease, border-color .25s ease, color .25s ease;
+  transition: background .25s ease, border-color .25s ease;
 }
 .card__acao::after {
   content: " →";
   display: inline-block;
   transition: transform .3s ease;
 }
-
-.card--principal .card__acao {
-  background: linear-gradient(180deg, #E9BC8A, var(--accent));
-  border-color: transparent;
-  color: #16120E;
-  box-shadow: 0 12px 30px -18px var(--accent);
+.card:hover .card__acao {
+  border-color: var(--accent);
+  background: rgb(var(--rgb-acento) / .14);
 }
-.card--livre .card__acao {
-  border-color: var(--linha);
-  color: var(--text-muted);
-}
-
-.card:hover .card__acao { border-color: var(--accent); }
-.card--principal:hover .card__acao { filter: brightness(1.06); }
-.card--livre:hover .card__acao { color: var(--marmore); }
 .card:hover .card__acao::after { transform: translateX(4px); }
 
 /* ============================================================
